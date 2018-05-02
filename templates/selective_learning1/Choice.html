@@ -1,0 +1,15 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Choice
+{% endblock %}
+
+{% block content %}
+<p> Which row would you like to choose?</p>
+    {% formfield player.row_choice %}
+
+<p> Which column would you like to choose? </p>
+    {% formfield player.column_choice %}
+    {% next_button %}
+{% endblock %}
