@@ -1,0 +1,51 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Information
+{% endblock %}
+
+{% block content %}
+  <table class="table table-bordered">
+    <tbody>
+      <tr>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="0">P1</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="1">P2</button></td>
+        <td><button class="btn btn-info colbutton" name= 'col_problem' value="0">C1</button></td>
+      </tr>
+      <tr>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="2">P3</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="3">P4</button></td>
+        <td><button class="btn btn-info colbutton" name= 'col_problem' value="1">C2</button></td>
+      </tr>
+      <tr>
+        <td><button class="btn btn-info rowbutton" name= 'row_problem' value="0">R1</button></td>
+        <td><button class="btn btn-info rowbutton" name= 'row_problem' value="1">R2</button></td>
+      </tr>
+    </tbody>
+  </table>
+  {{ form.problem.errors }}
+  {{ form.row_problem.errors }}
+  {{ form.col_problem.errors }}
+  {% next_button %}
+{% endblock %}
+
+{% block styles %}
+    <style>
+        .otree-timer {
+            display: none;
+        }
+    </style>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(function () {
+            $('.otree-timer__time-left').on('update.countdown', function (event) {
+                if (event.offset.totalSeconds === 5) {
+                    $('.otree-timer').show();
+                }
+            });
+        });
+    </script>
+{% endblock %}

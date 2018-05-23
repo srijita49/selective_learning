@@ -1,0 +1,69 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+Solve the Problem or Continue
+{% endblock %}
+
+{% block content %}
+<h3>You have selected problem {% if player.problem != None %} cell :{{player.problem }}
+{% else %} {%if player.row_problem != None %} row: {{player.row_problem}}
+{% else %} {% if player.col_problem != None %} column: {{ player.col_problem }}
+{% endif %} {% endif %} {% endif %}</h3>
+<h5> There are {{zeros}} zero(s) in the matrix
+  and the cutoff value is {{rand_cutoff}}.</h5>
+
+<input id="choice" name="choice" type="hidden" value="0">
+<div>
+     {% if player.problem != None %}
+      <p>
+      Solve: {{prob}}
+      </p>
+      {% else %}
+      {% if player.row_problem != None %}
+      <p>
+      The second last digit represents the number of ones in the row:
+      </p>
+      {{row_avg}}
+       {% else %}
+       {% if player.col_problem != None %}
+       <p>
+         The second last digit represents the number of ones in the column:
+       </p>
+       {{col_avg}}
+       {% endif %}
+       {% endif %}
+       {% endif %}
+
+    <p> {%formfield player.solution %}
+    <button class="btn btn-success">Submit</button> </p>
+
+
+</div>
+<div>
+  <p> Go back to the payoff matrix:
+  <button class="btn btn-danger">Pass</button>
+  </p>
+</div>
+
+{% endblock %}
+
+{% block styles %}
+    <style>
+        .otree-timer {
+            display: none;
+        }
+    </style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(function () {
+    $('.otree-timer__time-left').on('update.countdown', function (event) {
+        if (event.offset.totalSeconds === 5) {
+            $('.otree-timer').show();
+        }
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Instructions
+{% endblock %}
+
+{% block content %}
+
+  <p>
+     In the next page a {{Constants.num_rows}} by {{Constants.num_rows}} matrix will be shown.
+     Press the next button to start the game.
+  </p>
+  {% next_button %}
+  {% endblock %}

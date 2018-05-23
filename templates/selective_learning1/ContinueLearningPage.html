@@ -1,0 +1,88 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block app_styles%}
+
+<style type="text/css">
+td.pChosen{
+  background-color: lightgray;
+  font-weight: bold;
+}
+td {
+  width: 100px;
+}
+</style>
+{% endblock %}
+
+{% block title %}
+    Do you want to continue learning?
+{% endblock %}
+
+{% block content %}
+  <table class="table table-bordered" style="text-align:center; font-size:large;">
+    <tbody>
+      <tr>
+          {% if sol_list.0 == -1 %} <td> P1 </td>
+          {% else %} <td class='pChosen'>{{sol_list.0}} </td>
+          {% endif %}
+
+        {% if sol_list.1 == -1 %}  <td> P2 </td>
+         {% else %}   <td class='pChosen'> {{sol_list.1}} </td>
+         {% endif %}
+
+        {% if col_sol_list.0 == -1 %} <td> C1</td>
+          {% else %} <td class='pChosen'>{{col_sol_list.0}} </td>
+            {% endif %}
+      </tr>
+      <tr>
+
+        {% if sol_list.2 == -1 %}  <td> P3 </td>
+          {% else %}   <td class='pChosen'>{{sol_list.2}} </td>
+            {% endif %}
+
+        {% if sol_list.3 == -1 %} <td> P4 </td>
+         {% else %} <td class='pChosen'> {{sol_list.3}} </td>
+           {% endif %}
+
+        {% if col_sol_list.1 == -1 %}  <td> C2 </td>
+         {% else %}<td class='pChosen'> {{col_sol_list.1}} </td>
+            {% endif %}
+      </tr>
+      <tr>
+
+        {% if row_sol_list.0 == -1 %} <td> R1 </td>
+         {% else %} <td class='pChosen'> {{row_sol_list.0}} </td>
+           {% endif %}
+
+        {% if row_sol_list.1 == -1 %} <td> R2 </td>
+         {% else %} <td class='pChosen'> {{row_sol_list.1}} </td>
+           {% endif %}
+      </tr>
+    </tbody>
+  </table>
+  <button class='btn btn-success' name='cont_learning' value = True >Continue learning</button>
+  <button class='btn btn-warning' name='cont_learning' value = False >Move on to choice</button>
+
+  {{ form.cont_learning.errors }}
+
+  {% endblock %}
+
+  {% block styles %}
+      <style>
+          .otree-timer {
+              display: none;
+          }
+      </style>
+  {% endblock %}
+
+  {% block scripts %}
+  <script>
+  $(function () {
+      $('.otree-timer__time-left').on('update.countdown', function (event) {
+          if (event.offset.totalSeconds === 5) {
+              $('.otree-timer').show();
+          }
+      });
+  });
+  </script>
+  {% endblock %}

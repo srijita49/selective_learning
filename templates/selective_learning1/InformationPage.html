@@ -1,0 +1,46 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Instructions
+{% endblock %}
+
+{% block content %}
+
+  <p>
+     In the next page a {{Constants.num_rows}} by {{Constants.num_rows}} matrix will be shown.
+    There will be {{zeros}} cell(s) that would generate payoff of zero.
+  </p>
+  <p>
+   No of ones in different rows: {{ one_row}}
+    Payoff matrix: {{pay_matrix}}
+  </p>
+  <p>
+    Payoff list: {{pay_list}}
+  </p>
+  <p>
+    Problem list: {{prob_list}}
+</p>
+  {% next_button %}
+
+{% endblock %}
+
+{% block styles %}
+    <style>
+        .otree-timer {
+            display: none;
+        }
+    </style>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(function () {
+            $('.otree-timer__time-left').on('update.countdown', function (event) {
+                if (event.offset.totalSeconds === 5) {
+                    $('.otree-timer').show();
+                }
+            });
+        });
+    </script>
+{% endblock %}
