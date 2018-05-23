@@ -1,8 +1,12 @@
+import random
+import math
+import time
+
 from otree.api import (
     models, widgets, BaseConstants, BaseSubsession, BaseGroup, BasePlayer,
     Currency as c, currency_range
 )
-import PayoffMatrix as pm
+from selective_learning1.payoffmatrix import PayoffMatrix
 
 
 author = 'Your name here'
@@ -15,57 +19,30 @@ Your app description
 class Constants(BaseConstants):
     name_in_url = 'selective_learning1'
     players_per_group = None
-    num_rounds = 1
+    num_rounds = 2
+    num_rows = PayoffMatrix.n
+    num_cells = PayoffMatrix.N
+    num_choices = 2
 
 
 class Subsession(BaseSubsession):
     pass
-
 
 class Group(BaseGroup):
     pass
 
 
 class Player(BasePlayer):
-
-    c11=models.FloatField(blank=True)
-    c12=models.FloatField(blank=True)
-    c21=models.FloatField(blank=True)
-    c22=models.FloatField(blank=True)
-    ca1=models.FloatField(blank=True)
-    ca2=models.FloatField(blank=True)
-    ra1=models.FloatField(blank=True)
-    ra2=models.FloatField(blank=True)
-
-    self.Row1=[c11, c12, ca1]
-    self.Row2=[c21, c22, ca2]
-    self.ARow=[ra1,ra2]
-
-    row=models.IntegerField(
-        choices=[
-                [0, 'Average'],
-                [1,'Red'],
-                [2, 'Blue'],
-                ]
-            )
-    column=models.IntegerField(
-        choices=[
-                [0, 'Average'],
-                [1, 'Square'],
-                [2, 'Circle'],
-                ]
-            )
-    row_choice=models.IntegerField(
-        choices=[
-                [0, 'Average'],
-                [1,'Red'],
-                [2, 'Blue'],
-                ]
-            )
-    column_choice=models.IntegerField(
-        choices=[
-                [0, 'Average'],
-                [1, 'Square'],
-                [2, 'Circle'],
-                ]
-            )
+    problem = models.IntegerField(min=0, max= Constants.num_cells, blank= True)
+    row_problem = models.IntegerField(min = 0, max = Constants.num_rows, blank= True )
+    col_problem = models.IntegerField(min = 0, max = Constants.num_rows, blank= True )
+    solution = models.FloatField(blank=True)
+    cont_learning = models.BooleanField( initial = True)
+    row_choice= models.IntegerField(
+                choices=[[0, 'average row'],
+                        [1,'Row 1'],
+                        [2,'Row 2']])
+    column_choice= models.IntegerField(
+                choices=[[0, 'average column' ],
+                        [1,'Column 1'],
+                        [2,'Column 2']])
