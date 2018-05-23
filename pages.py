@@ -14,7 +14,7 @@ class InstructionPage(Page):
         return self.round_number==1
 
     def before_next_page(self):
-        self.participant.vars['expiry'] = time.time() + 60
+        self.participant.vars['expiry'] = time.time() + 5*60
 
 class InstructionTwoPage(Page):
     def before_next_page(self):
