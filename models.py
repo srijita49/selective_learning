@@ -19,7 +19,7 @@ Your app description
 class Constants(BaseConstants):
     name_in_url = 'selective_learning1'
     players_per_group = None
-    num_rounds = 2
+    num_rounds = 10
     num_rows = PayoffMatrix.n
     num_cells = PayoffMatrix.N
     num_choices = 2
