@@ -45,6 +45,10 @@ class InstructionTwoPage(Page):
             player.participant.vars['pay_list_round'] = pay_list_round
             player.participant.vars['problem_no'] = problem_no
 
+    def vars_for_template(self):
+        return {'finalpayoff': self.player.payoff,
+                'totalpayoff': self.player.participant.payoff}
+
     timer_text = 'Time left to finish this round:'
 
     def get_timeout_seconds(self):
@@ -250,18 +254,7 @@ class FinalChoiceTwoPage(Page):
 
 
 
-class ResultsPage(Page):
-    def vars_for_template(self):
-        return {'finalpayoff': self.player.payoff,
-                'totalpayoff': self.player.participant.payoff}
-
-    def get_timeout_seconds(self):
-        return self.participant.vars['expiry'] - time.time()
-    def is_displayed(self):
-        return self.participant.vars['expiry']-time.time()>3
-
-
 num_of_tries= PayoffMatrix.N + 2*PayoffMatrix.n
 learning_page_sequence = [SelectProblemPage, ChooseToSolvePage,ContinueLearningPage]*num_of_tries
 choice_page_sequence = [FinalChoiceOnePage, FinalChoiceTwoPage]*Constants.num_choices
-page_sequence = [ PriorPage, InstructionTwoPage] + learning_page_sequence + choice_page_sequence + [ResultsPage]
+page_sequence = [ PriorPage, InstructionTwoPage] + learning_page_sequence + choice_page_sequence
