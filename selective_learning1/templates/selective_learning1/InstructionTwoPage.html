@@ -6,13 +6,24 @@
 {% endblock %}
 
 {% block content %}
-
+ {% if subsession.round_number == 1%}
   <p>
-  You are now ready to start round {{subsession.round_number}}.
+  You are now ready to start round the actual experiment.
   Good Luck!
   </p>
   <p>
      Press the next button to start the round.
   </p>
+  {% else %}
+  <p>
+    This round payoff: {{finalpayoff}}
+
+  </p>
+
+  <p>
+      Total Payoff: {{totalpayoff}}
+  </p>
+
+  {% endif %}
   {% next_button %}
   {% endblock %}
