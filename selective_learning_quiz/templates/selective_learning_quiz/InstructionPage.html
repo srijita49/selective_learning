@@ -1,0 +1,85 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Instructions
+{% endblock %}
+
+{% block content %}
+  {% if subsession.round_number == 1 %}
+  <p>
+     In this experiment you will be given with a {{Constants.num_rows}} by {{Constants.num_rows}} matrix.
+     Each cell of the matrix would generate a payoff of 1 or 0. You can open as many cells as
+     you like to learn about the payoff in the cell. Also you can choose to see the total number of
+     1s in a row or a column by opening cells in the average row or column.
+  </p>
+  <h4> Information Stage: </h4>
+  <div>
+  <p>
+    For each round a random number between {{Constants.low_limit}} and {{Constants.high_limit}} would be
+    generated. This value would be called the <span style = "color:blue"> cutoff value</span>
+      If you choose to open a cell you will see a problem of the following form,
+  </p>
+    <p>
+      0.23141552+0.24661835-0.23638687.
+    </p>
+    <p>
+      If the result of this expression is higher than the <span style = "color:blue"> cutoff value</span>
+      then the payoff from the cell is 1 otherwise the payoff is zero.
+    </p>
+    <p>
+      If you choose to open a cell in the average row or column then you will a problem of follwing type:
+      </p>
+      <p>
+        The second last digit represents the number of ones in the row:
+      </p>
+      <p>
+        .51217116.
+      </p>
+    </div>
+    <h4> Choice Stage:</h4>
+     <div>
+      <p>
+        Once you have are ready to choose a cell, you need to continue to the choice stage. In the
+        choice stage you need to choose a row and a column. If you choose cell (i,j), row i and
+        column j then you'll earn the payoff from cell (i,j).
+      </p>
+      <p>
+        You would also be allowed to choose the average row or column. For example,
+        if you choose <span style = "color:red"> average column</span> and <span style = "color: green">
+          second row</span>, then one cell would be chosen randomly from second row and your payoff
+           would be the payoff of the randomly chosen cell.
+      </p>
+      <p>
+        However, if you choose both average row and average column together
+        then your payoff would be zero.
+      </p>
+
+      <p>
+        You will be five choices in the choice stage. Only one choice at random will be chosen for
+        payoff. You can also choose the exact same cell for five times as well.
+      </p>
+     <p>
+       In the following few pages we will ask questions about the structure of the experiment.
+       Once you are done with the quiz go to the actual experiment. You will have 30 minutes to
+       finish as many rounds of the experiment as possible. Your final payoff would be sum of payoff from
+       all the rounds.
+     </p>
+
+</div>
+ <p>
+   In the next few pages you will asked some questions about the payoff structure.
+   You have answer atleast 4 correct answers to continue to the actual experiment.
+ </p>
+
+ {% else %}
+  <p>
+    Sorry you haven't correctly answered 4 questions. To go to the actual experiment
+    you have to retake the quiz.
+  </p>
+ {% endif %}
+  <p>
+     Press the next button to start the quiz.
+  </p>
+  {% next_button %}
+  {% endblock %}

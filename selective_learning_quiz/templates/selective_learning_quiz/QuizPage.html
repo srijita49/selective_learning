@@ -1,0 +1,31 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Question:
+{% endblock %}
+
+{% block content %}
+    <ul>
+      <li>
+      {% if question_type != 0 %}
+      The random cutoff is {{question_type }}, what is the payoff of the (either 1 or 0)
+      if the payoff of the cell is given by:
+      <p>
+      {{random_question}}
+      </p>
+      {% else %}
+       What is the total number of cells with payoff 1 if the average cell has the following
+       value:
+      <p>
+      {{random_question}}
+      </p>
+      {% endif %}
+     <p>
+
+      {% formfield player.solution %}
+  </li>
+</ul>
+    {% next_button %}
+
+{% endblock %}
