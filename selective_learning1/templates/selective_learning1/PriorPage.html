@@ -1,0 +1,26 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Instructions
+{% endblock %}
+
+{% block content %}
+
+  <h4>Possibilities:</h4>
+    <div>
+      There are three possible types of matrix:
+      <ol type="i">
+        <li> 72 cells generate payoff 0 and only 9 cells generate payoff of 1. </li>
+        <li> 54 cells generate payoff 0 and only 27 cells generate payoff of 1.</li>
+        <li> 36 cells generate payoff 0 and 45 cells generate payoff of 1. </li>
+      </ol>
+    </div>
+    <h6> All three possibilities are equally likely. </h6>
+
+</div>
+ <p>
+     Press the next button to start the experiment.
+  </p>
+  {% next_button %}
+  {% endblock %}

@@ -1,0 +1,489 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block app_styles%}
+
+<style type="text/css">
+td.pChosen{
+  background-color: lightgray;
+  font-weight: bold;
+}
+td {
+  width: 75px;
+}
+</style>
+{% endblock %}
+
+{% block title %}
+    Do you want to continue learning?
+{% endblock %}
+
+{% block content %}
+  <table class="table table-bordered" style="text-align:center; font-size:large;">
+    <tbody>
+      <tr>
+        <td> </td>
+        <th style="color:Red"> Red </th>
+        <th style="color:Blue">	Blue	</th>
+        <th style="color:Orange"> Orange	</th>
+        <th style="color:Purple"> Purple </th>
+        <th style="color:Pink">	Pink	</th>
+        <th style="color:Green"> Green	</th>
+        <th style="color:Gray"> Gray	</th>
+        <th style="color:Brown">	Brown </th>
+        <th style="color:Violet"> Violet </th>
+        <th>	Average </th>
+      </tr>
+      <tr>
+          <th> Square </th>
+
+         {% if sol_list.0 == -1 %} <td> P1 </td>
+          {% else %} <td class='pChosen'>{{sol_list.0}} </td>
+         {% endif %}
+
+         {% if sol_list.1 == -1 %}  <td> P2 </td>
+          {% else %}   <td class='pChosen'> {{sol_list.1}} </td>
+         {% endif %}
+
+         {% if sol_list.2 == -1 %} <td> P3 </td>
+          {% else %} <td class='pChosen'>{{sol_list.2}} </td>
+         {% endif %}
+
+         {% if sol_list.3 == -1 %} <td> P4 </td>
+          {% else %} <td class='pChosen'>{{sol_list.3}} </td>
+         {% endif %}
+
+         {% if sol_list.4 == -1 %} <td> P5 </td>
+          {% else %} <td class='pChosen'>{{sol_list.4}} </td>
+         {% endif %}
+
+         {% if sol_list.5 == -1 %} <td> P6 </td>
+          {% else %} <td class='pChosen'>{{sol_list.5}} </td>
+         {% endif %}
+
+         {% if sol_list.6 == -1 %} <td> P7 </td>
+          {% else %} <td class='pChosen'>{{sol_list.6}} </td>
+         {% endif %}
+
+         {% if sol_list.7 == -1 %} <td> P8 </td>
+          {% else %} <td class='pChosen'>{{sol_list.7}} </td>
+         {% endif %}
+
+         {% if sol_list.8 == -1 %} <td> P9 </td>
+          {% else %} <td class='pChosen'>{{sol_list.8}} </td>
+         {% endif %}
+
+         {% if col_sol_list.0 == -1 %} <td> C1</td>
+          {% else %} <td class='pChosen'>{{col_sol_list.0}} </td>
+         {% endif %}
+      </tr>
+      <tr>
+        <th> Triangle </th>
+        {% if sol_list.9 == -1 %}  <td> P10 </td>
+          {% else %}   <td class='pChosen'>{{sol_list.9}} </td>
+            {% endif %}
+
+        {% if sol_list.10 == -1 %} <td> P11 </td>
+         {% else %} <td class='pChosen'> {{sol_list.10}} </td>
+           {% endif %}
+
+        {% if sol_list.11 == -1 %}  <td> P12 </td>
+          {% else %}   <td class='pChosen'>{{sol_list.11}} </td>
+            {% endif %}
+
+        {% if sol_list.12 == -1 %} <td> P13 </td>
+         {% else %} <td class='pChosen'> {{sol_list.12}} </td>
+        {% endif %}
+
+        {% if sol_list.13 == -1 %}  <td> P14 </td>
+         {% else %}   <td class='pChosen'>{{sol_list.13}} </td>
+        {% endif %}
+
+        {% if sol_list.14 == -1 %} <td> P15 </td>
+         {% else %} <td class='pChosen'> {{sol_list.14}} </td>
+        {% endif %}
+
+        {% if sol_list.15 == -1 %} <td> P16 </td>
+         {% else %} <td class='pChosen'> {{sol_list.15}} </td>
+        {% endif %}
+
+        {% if sol_list.16 == -1 %}  <td> P17 </td>
+         {% else %}   <td class='pChosen'>{{sol_list.16}} </td>
+        {% endif %}
+
+        {% if sol_list.17 == -1 %} <td> P18 </td>
+         {% else %} <td class='pChosen'> {{sol_list.17}} </td>
+        {% endif %}
+
+        {% if col_sol_list.1 == -1 %}  <td> C2 </td>
+         {% else %}<td class='pChosen'> {{col_sol_list.1}} </td>
+            {% endif %}
+      </tr>
+      <tr>
+        <th> Circle </th>
+          {% if sol_list.18 == -1 %} <td> P19 </td>
+          {% else %} <td class='pChosen'>{{sol_list.18}} </td>
+          {% endif %}
+
+         {% if sol_list.19 == -1 %}  <td> P20 </td>
+         {% else %}   <td class='pChosen'> {{sol_list.19}} </td>
+         {% endif %}
+
+         {% if sol_list.20 == -1 %} <td> P21 </td>
+         {% else %} <td class='pChosen'>{{sol_list.20}} </td>
+         {% endif %}
+
+         {% if sol_list.21 == -1 %} <td> P22 </td>
+         {% else %} <td class='pChosen'>{{sol_list.21}} </td>
+         {% endif %}
+
+         {% if sol_list.22 == -1 %} <td> P23 </td>
+         {% else %} <td class='pChosen'>{{sol_list.22}} </td>
+         {% endif %}
+
+         {% if sol_list.23 == -1 %} <td> P24 </td>
+         {% else %} <td class='pChosen'>{{sol_list.23}} </td>
+         {% endif %}
+
+         {% if sol_list.24 == -1 %} <td> P25 </td>
+         {% else %} <td class='pChosen'>{{sol_list.24}} </td>
+         {% endif %}
+
+         {% if sol_list.25 == -1 %} <td> P26 </td>
+         {% else %} <td class='pChosen'>{{sol_list.25}} </td>
+         {% endif %}
+
+         {% if sol_list.26 == -1 %} <td> P27 </td>
+         {% else %} <td class='pChosen'>{{sol_list.26}} </td>
+         {% endif %}
+
+        {% if col_sol_list.2 == -1 %} <td> C3 </td>
+          {% else %} <td class='pChosen'>{{col_sol_list.2}} </td>
+            {% endif %}
+      </tr>
+      <tr>
+          <th> Diamond </th>
+
+          {% if sol_list.27 == -1 %} <td> P28 </td>
+          {% else %} <td class='pChosen'>{{sol_list.27}} </td>
+          {% endif %}
+
+         {% if sol_list.28 == -1 %}  <td> P29 </td>
+         {% else %}   <td class='pChosen'> {{sol_list.28}} </td>
+         {% endif %}
+
+         {% if sol_list.29 == -1 %} <td> P30 </td>
+         {% else %} <td class='pChosen'>{{sol_list.29}} </td>
+         {% endif %}
+
+         {% if sol_list.30 == -1 %} <td> P31 </td>
+         {% else %} <td class='pChosen'>{{sol_list.30}} </td>
+         {% endif %}
+
+         {% if sol_list.31 == -1 %} <td> P32 </td>
+         {% else %} <td class='pChosen'>{{sol_list.31}} </td>
+         {% endif %}
+
+         {% if sol_list.32 == -1 %} <td> P33 </td>
+         {% else %} <td class='pChosen'>{{sol_list.32}} </td>
+         {% endif %}
+
+         {% if sol_list.33 == -1 %} <td> P34 </td>
+         {% else %} <td class='pChosen'>{{sol_list.33}} </td>
+         {% endif %}
+
+         {% if sol_list.34 == -1 %} <td> P35 </td>
+         {% else %} <td class='pChosen'>{{sol_list.34}} </td>
+         {% endif %}
+
+         {% if sol_list.35 == -1 %} <td> P36 </td>
+         {% else %} <td class='pChosen'>{{sol_list.35}} </td>
+         {% endif %}
+
+        {% if col_sol_list.3 == -1 %} <td> C4 </td>
+          {% else %} <td class='pChosen'>{{col_sol_list.3}} </td>
+            {% endif %}
+      </tr>
+      <tr>
+          <th> Pentagon </th>
+
+          {% if sol_list.36 == -1 %} <td> P37 </td>
+          {% else %} <td class='pChosen'>{{sol_list.36}} </td>
+          {% endif %}
+
+         {% if sol_list.37 == -1 %}  <td> P38 </td>
+         {% else %}   <td class='pChosen'> {{sol_list.37}} </td>
+         {% endif %}
+
+         {% if sol_list.38 == -1 %} <td> P39 </td>
+         {% else %} <td class='pChosen'>{{sol_list.38}} </td>
+         {% endif %}
+
+         {% if sol_list.39 == -1 %} <td> P40 </td>
+         {% else %} <td class='pChosen'>{{sol_list.39}} </td>
+         {% endif %}
+
+         {% if sol_list.40 == -1 %} <td> P41 </td>
+         {% else %} <td class='pChosen'>{{sol_list.40}} </td>
+         {% endif %}
+
+         {% if sol_list.41 == -1 %} <td> P42 </td>
+         {% else %} <td class='pChosen'>{{sol_list.41}} </td>
+         {% endif %}
+
+         {% if sol_list.42 == -1 %} <td> P43 </td>
+         {% else %} <td class='pChosen'>{{sol_list.42}} </td>
+         {% endif %}
+
+         {% if sol_list.43 == -1 %} <td> P44 </td>
+         {% else %} <td class='pChosen'>{{sol_list.43}} </td>
+         {% endif %}
+
+         {% if sol_list.44 == -1 %} <td> P45 </td>
+         {% else %} <td class='pChosen'>{{sol_list.44}} </td>
+         {% endif %}
+
+        {% if col_sol_list.4 == -1 %} <td> C5 </td>
+          {% else %} <td class='pChosen'>{{col_sol_list.4}} </td>
+            {% endif %}
+      </tr>
+      <tr>
+          <th> Spade </th>
+
+          {% if sol_list.45 == -1 %} <td> P46 </td>
+          {% else %} <td class='pChosen'>{{sol_list.45}} </td>
+          {% endif %}
+
+         {% if sol_list.46 == -1 %}  <td> P47 </td>
+         {% else %}   <td class='pChosen'> {{sol_list.46}} </td>
+         {% endif %}
+
+         {% if sol_list.47 == -1 %} <td> P48 </td>
+         {% else %} <td class='pChosen'>{{sol_list.47}} </td>
+         {% endif %}
+
+         {% if sol_list.48 == -1 %} <td> P49 </td>
+         {% else %} <td class='pChosen'>{{sol_list.48}} </td>
+         {% endif %}
+
+         {% if sol_list.49 == -1 %} <td> P50 </td>
+         {% else %} <td class='pChosen'>{{sol_list.49}} </td>
+         {% endif %}
+
+         {% if sol_list.50 == -1 %} <td> P51 </td>
+         {% else %} <td class='pChosen'>{{sol_list.50}} </td>
+         {% endif %}
+
+         {% if sol_list.51 == -1 %} <td> P52 </td>
+         {% else %} <td class='pChosen'>{{sol_list.51}} </td>
+         {% endif %}
+
+         {% if sol_list.52 == -1 %} <td> P53 </td>
+         {% else %} <td class='pChosen'>{{sol_list.52}} </td>
+         {% endif %}
+
+         {% if sol_list.53 == -1 %} <td> P54 </td>
+         {% else %} <td class='pChosen'>{{sol_list.53}} </td>
+         {% endif %}
+
+        {% if col_sol_list.5 == -1 %} <td> C6 </td>
+          {% else %} <td class='pChosen'>{{col_sol_list.5}} </td>
+            {% endif %}
+      </tr>
+      <tr>
+          <th> Heart </th>
+
+          {% if sol_list.54 == -1 %} <td> P55 </td>
+          {% else %} <td class='pChosen'>{{sol_list.54}} </td>
+          {% endif %}
+
+         {% if sol_list.55 == -1 %}  <td> P56 </td>
+         {% else %}   <td class='pChosen'> {{sol_list.55}} </td>
+         {% endif %}
+
+         {% if sol_list.56 == -1 %} <td> P57 </td>
+         {% else %} <td class='pChosen'>{{sol_list.56}} </td>
+         {% endif %}
+
+         {% if sol_list.57 == -1 %} <td> P58 </td>
+         {% else %} <td class='pChosen'>{{sol_list.57}} </td>
+         {% endif %}
+
+         {% if sol_list.58 == -1 %} <td> P59 </td>
+         {% else %} <td class='pChosen'>{{sol_list.58}} </td>
+         {% endif %}
+
+         {% if sol_list.59 == -1 %} <td> P60 </td>
+         {% else %} <td class='pChosen'>{{sol_list.59}} </td>
+         {% endif %}
+
+         {% if sol_list.60 == -1 %} <td> P61 </td>
+         {% else %} <td class='pChosen'>{{sol_list.60}} </td>
+         {% endif %}
+
+         {% if sol_list.61 == -1 %} <td> P62 </td>
+         {% else %} <td class='pChosen'>{{sol_list.61}} </td>
+         {% endif %}
+
+         {% if sol_list.62 == -1 %} <td> P63 </td>
+         {% else %} <td class='pChosen'>{{sol_list.62}} </td>
+         {% endif %}
+
+        {% if col_sol_list.6 == -1 %} <td> C7 </td>
+          {% else %} <td class='pChosen'>{{col_sol_list.6}} </td>
+            {% endif %}
+      </tr>
+      <tr>
+          <th> Rectangle </th>
+
+          {% if sol_list.63 == -1 %} <td> P64 </td>
+          {% else %} <td class='pChosen'>{{sol_list.63}} </td>
+          {% endif %}
+
+         {% if sol_list.64 == -1 %}  <td> P65 </td>
+         {% else %}   <td class='pChosen'> {{sol_list.64}} </td>
+         {% endif %}
+
+         {% if sol_list.65 == -1 %} <td> P66 </td>
+         {% else %} <td class='pChosen'>{{sol_list.65}} </td>
+         {% endif %}
+
+         {% if sol_list.66 == -1 %} <td> P67 </td>
+         {% else %} <td class='pChosen'>{{sol_list.66}} </td>
+         {% endif %}
+
+         {% if sol_list.67 == -1 %} <td> P68 </td>
+         {% else %} <td class='pChosen'>{{sol_list.67}} </td>
+         {% endif %}
+
+         {% if sol_list.68 == -1 %} <td> P69 </td>
+         {% else %} <td class='pChosen'>{{sol_list.68}} </td>
+         {% endif %}
+
+         {% if sol_list.69 == -1 %} <td> P70 </td>
+         {% else %} <td class='pChosen'>{{sol_list.69}} </td>
+         {% endif %}
+
+         {% if sol_list.70 == -1 %} <td> P71 </td>
+         {% else %} <td class='pChosen'>{{sol_list.70}} </td>
+         {% endif %}
+
+         {% if sol_list.71 == -1 %} <td> P72 </td>
+         {% else %} <td class='pChosen'>{{sol_list.71}} </td>
+         {% endif %}
+
+        {% if col_sol_list.7 == -1 %} <td> C8</td>
+          {% else %} <td class='pChosen'>{{col_sol_list.7}} </td>
+            {% endif %}
+      </tr>
+      <tr>
+          <th> Ellipse </th>
+
+          {% if sol_list.72 == -1 %} <td> P73 </td>
+          {% else %} <td class='pChosen'>{{sol_list.72}} </td>
+          {% endif %}
+
+         {% if sol_list.73 == -1 %} <td> P74 </td>
+         {% else %}   <td class='pChosen'> {{sol_list.73}} </td>
+         {% endif %}
+
+         {% if sol_list.74 == -1 %} <td> P75 </td>
+         {% else %} <td class='pChosen'>{{sol_list.74}} </td>
+         {% endif %}
+
+         {% if sol_list.75 == -1 %} <td> P76 </td>
+         {% else %} <td class='pChosen'>{{sol_list.75}} </td>
+         {% endif %}
+
+         {% if sol_list.76 == -1 %} <td> P77 </td>
+         {% else %} <td class='pChosen'>{{sol_list.76}} </td>
+         {% endif %}
+
+         {% if sol_list.77 == -1 %} <td> P78 </td>
+         {% else %} <td class='pChosen'>{{sol_list.77}} </td>
+         {% endif %}
+
+         {% if sol_list.78 == -1 %} <td> P79 </td>
+         {% else %} <td class='pChosen'>{{sol_list.78}} </td>
+         {% endif %}
+
+         {% if sol_list.79 == -1 %} <td> P80 </td>
+         {% else %} <td class='pChosen'>{{sol_list.79}} </td>
+         {% endif %}
+
+         {% if sol_list.80 == -1 %} <td> P81 </td>
+         {% else %} <td class='pChosen'>{{sol_list.80}} </td>
+         {% endif %}
+
+        {% if col_sol_list.8 == -1 %} <td> C9</td>
+          {% else %} <td class='pChosen'>{{col_sol_list.8}} </td>
+            {% endif %}
+      </tr>
+      <tr>
+        <th> Average </th>
+
+        {% if row_sol_list.0 == -1 %} <td> R1 </td>
+         {% else %} <td class='pChosen'> {{row_sol_list.0}} </td>
+           {% endif %}
+
+        {% if row_sol_list.1 == -1 %} <td> R2 </td>
+         {% else %} <td class='pChosen'> {{row_sol_list.1}} </td>
+           {% endif %}
+
+        {% if row_sol_list.2 == -1 %} <td> R3 </td>
+         {% else %} <td class='pChosen'> {{row_sol_list.2}} </td>
+        {% endif %}
+
+        {% if row_sol_list.3 == -1 %} <td> R4 </td>
+         {% else %} <td class='pChosen'> {{row_sol_list.3}} </td>
+        {% endif %}
+
+        {% if row_sol_list.4 == -1 %} <td> R5 </td>
+         {% else %} <td class='pChosen'> {{row_sol_list.4}} </td>
+        {% endif %}
+
+        {% if row_sol_list.5 == -1 %} <td> R6 </td>
+         {% else %} <td class='pChosen'> {{row_sol_list.5}} </td>
+        {% endif %}
+
+        {% if row_sol_list.6 == -1 %} <td> R7 </td>
+         {% else %} <td class='pChosen'> {{row_sol_list.6}} </td>
+        {% endif %}
+
+        {% if row_sol_list.7 == -1 %} <td> R8 </td>
+         {% else %} <td class='pChosen'> {{row_sol_list.7}} </td>
+        {% endif %}
+
+        {% if row_sol_list.8 == -1 %} <td> R9 </td>
+         {% else %} <td class='pChosen'> {{row_sol_list.8}} </td>
+        {% endif %}
+
+      </tr>
+    </tbody>
+  </table>
+  <button class='btn btn-success' name='cont_learning' value = True >Continue learning</button>
+  <button  class='btn btn-warning' name='cont_learning' value = False >Move on to choice</button>
+</p>
+  {{ form.cont_learning.errors }}
+
+  {% endblock %}
+
+  {% block styles %}
+      <style>
+          .otree-timer {
+              display: none;
+          }
+      </style>
+  {% endblock %}
+
+  {% block scripts %}
+  <script>
+  $(function () {
+      $('.otree-timer__time-left').on('update.countdown', function (event) {
+          if (event.offset.totalSeconds === 5) {
+              $('.otree-timer').show();
+          }
+      });
+  });
+  </script>
+  {% endblock %}
