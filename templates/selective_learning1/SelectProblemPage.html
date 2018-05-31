@@ -6,28 +6,164 @@
 {% endblock %}
 
 {% block content %}
+  <div>
+    <p>
+      There are {{zeros}} zeros in the matrix.
+    </p>
+    <p>
+      The cutoff value is {{cutoff}}.
+    </p>
+  </div>
   <table class="table table-bordered">
     <tbody>
       <tr>
+        <td> </td>
+        <th style="color:Red"> Red </th>
+        <th style="color:Blue">	Blue	</th>
+        <th style="color:Orange"> Orange	</th>
+        <th style="color:Purple"> Purple </th>
+        <th style="color:Pink">	Pink	</th>
+        <th style="color:Green"> Green	</th>
+        <th style="color:Gray"> Gray	</th>
+        <th style="color:Brown">	Brown </th>
+        <th style="color:Violet"> Violet </th>
+        <th>	Average </th>
+      </tr>
+      <tr>
+        <th> Square </th>
         <td><button class="btn btn-info cellbutton" name= 'problem' value="0">P1</button></td>
         <td><button class="btn btn-info cellbutton" name= 'problem' value="1">P2</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="2">P3</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="3">P4</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="4">P5</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="5">P6</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="6">P7</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="7">P8</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="8">P9</button></td>
         <td><button class="btn btn-info colbutton" name= 'col_problem' value="0">C1</button></td>
       </tr>
       <tr>
-        <td><button class="btn btn-info cellbutton" name= 'problem' value="2">P3</button></td>
-        <td><button class="btn btn-info cellbutton" name= 'problem' value="3">P4</button></td>
+        <th> Triangle </th>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="9">P10</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="10">P11</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="11">P12</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="12">P13</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="13">P14</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="14">P15</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="15">P16</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="16">P17</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="17">P18</button></td>
         <td><button class="btn btn-info colbutton" name= 'col_problem' value="1">C2</button></td>
       </tr>
       <tr>
+        <th> Circle </th>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="18">P19</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="19">P20</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="20">P21</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="21">P22</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="22">P23</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="23">P24</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="24">P25</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="25">P26</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="26">P27</button></td>
+        <td><button class="btn btn-info colbutton" name= 'col_problem' value="2">C3</button></td>
+      </tr>
+      <tr>
+        <th> Diamond </th>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="27">P28</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="28">P29</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="29">P30</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="30">P31</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="31">P32</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="32">P33</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="33">P34</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="34">P35</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="35">P36</button></td>
+        <td><button class="btn btn-info colbutton" name= 'col_problem' value="3">C4</button></td>
+      </tr>
+      <tr>
+        <th> Pentagon </th>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="36">P37</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="37">P38</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="38">P39</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="39">P40</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="40">P41</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="41">P42</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="42">P43</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="43">P44</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="44">P45</button></td>
+        <td><button class="btn btn-info colbutton" name= 'col_problem' value="4">C5</button></td>
+      </tr>
+      <tr>
+        <th> Spade </th>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="45">P46</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="46">P47</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="47">P48</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="48">P49</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="49">P50</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="50">P51</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="51">P52</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="52">P53</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="53">P54</button></td>
+        <td><button class="btn btn-info colbutton" name= 'col_problem' value="5">C6</button></td>
+      </tr>
+      <tr>
+        <th> Heart </th>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="54">P55</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="55">P56</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="56">P57</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="57">P58</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="58">P59</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="59">P60</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="60">P61</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="61">P62</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="62">P63</button></td>
+        <td><button class="btn btn-info colbutton" name= 'col_problem' value="6">C7</button></td>
+      </tr>
+      <tr>
+        <th> Rectangle </th>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="63">P64</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="64">P65</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="65">P66</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="66">P67</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="67">P68</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="68">P69</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="69">P70</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="70">P71</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="71">P72</button></td>
+        <td><button class="btn btn-info colbutton" name= 'col_problem' value="7">C8</button></td>
+      </tr>
+      <tr>
+        <th> Ellipse </th>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="72">P73</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="73">P74</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="74">P75</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="75">P76</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="76">P77</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="77">P78</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="78">P79</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="79">P80</button></td>
+        <td><button class="btn btn-info cellbutton" name= 'problem' value="80">P81</button></td>
+        <td><button class="btn btn-info colbutton" name= 'col_problem' value="8">C9</button></td>
+      </tr>
+      <tr>
+        <th> Average </th>
         <td><button class="btn btn-info rowbutton" name= 'row_problem' value="0">R1</button></td>
         <td><button class="btn btn-info rowbutton" name= 'row_problem' value="1">R2</button></td>
+        <td><button class="btn btn-info rowbutton" name= 'row_problem' value="2">R3</button></td>
+        <td><button class="btn btn-info rowbutton" name= 'row_problem' value="3">R4</button></td>
+        <td><button class="btn btn-info rowbutton" name= 'row_problem' value="4">R5</button></td>
+        <td><button class="btn btn-info rowbutton" name= 'row_problem' value="5">R6</button></td>
+        <td><button class="btn btn-info rowbutton" name= 'row_problem' value="6">R7</button></td>
+        <td><button class="btn btn-info rowbutton" name= 'row_problem' value="7">R8</button></td>
+        <td><button class="btn btn-info rowbutton" name= 'row_problem' value="8">R9</button></td>
       </tr>
     </tbody>
   </table>
   {{ form.problem.errors }}
   {{ form.row_problem.errors }}
   {{ form.col_problem.errors }}
-  {% next_button %}
+
 {% endblock %}
 
 {% block styles %}
