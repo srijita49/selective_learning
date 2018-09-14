@@ -12,6 +12,17 @@ SESSION_CONFIG_DEFAULTS = {
 }
 
 SESSION_CONFIGS = [
+    { 'name': 'Selective_Learning',
+       'display_name': 'Selective Learning',
+       'num_demo_participants': 1,
+       'app_sequence': ['selective_learning1'],
+    },
+    { 'name': 'Selective_Learning_Quiz',
+       'display_name': 'Selective Learning Quiz',
+       'num_demo_participants': 1,
+       'app_sequence': ['selective_learning_quiz'],
+    },
+
     #{
     #    'name': 'public_goods',
     #    'display_name': "Public Goods",
@@ -29,7 +40,12 @@ LANGUAGE_CODE = 'en'
 REAL_WORLD_CURRENCY_CODE = 'USD'
 USE_POINTS = True
 
-ROOMS = []
+ROOMS = [
+    {
+        'name': 'cess_lab',
+        'display_name': 'CESS Lab',
+    },
+]
 
 
 # AUTH_LEVEL:
