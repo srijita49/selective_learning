@@ -1,0 +1,58 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Revealed cell or Average
+{% endblock %}
+
+{% block content %}
+
+  {% if player.problem != None %}
+  <p class="solution">
+    Solution to the problem from cell {{problem_no}} is {{payoff_cell}}.
+  </p>
+    <p>
+    The cutoff value is given by {{rand_cutoff}}.
+  </p>
+  {% endif %}
+  {% if player.row_problem != None %}
+  <p class="solution">
+    Solution to the problem from row {{problem_no}} is {{one_row}}.
+  </p>
+  {% endif %}
+  {% if player.col_problem != None %}
+  <p class="solution">
+    Solution to the problem from column {{problem_no}} is {{one_col}}.
+  </p>
+  {% endif %}
+  <p> {% formfield player.solution %}
+  <button class="btn btn-success">Submit</button> </p>
+  <p>
+    You have revealed {{reveal_both_no}} cells or averages. You can reveal
+    at most {{Constants.both_reveal}} cells or averages in total.
+  </p>
+{% endblock %}
+
+{% block styles %}
+    <style>
+        .otree-timer {
+            display: none;
+        }
+        p.solution{
+          font-size: 150%;
+          color: RoyalBlue;
+        }
+    </style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(function () {
+    $('.otree-timer__time-left').on('update.countdown', function (event) {
+        if (event.offset.totalSeconds === 5) {
+            $('.otree-timer').show();
+        }
+    });
+});
+</script>
+{% endblock %}

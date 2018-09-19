@@ -1,0 +1,238 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Instructions
+{% endblock %}
+
+{% block content %}
+<div>
+    <p>
+     In this experiment you will be given with a {{Constants.num_rows}} by {{Constants.num_rows}} matrix.
+     Each column represents a color and each row represents a shape.  Each cell of the matrix can generate
+     a payoff of 1 or 0.  However, you will not be given any information about the payoff from any particular cell.
+     For illustration, let us consider a 2 by 2 matrix:
+     </p>
+     <table class="table table-bordered">
+       <tbody>
+         <tr>
+           <td> </td>
+           <th style="color:Red; text-align:center"> Red </th>
+           <th style="color:Blue; text-align:center">	Blue	</th>
+           <th style="text-align:center">	Average </th>
+         </tr>
+         <tr>
+           <th> Square </th>
+           <td style="text-align:center">P1</td>
+           <td style="text-align:center">P2</td>
+           <td style="text-align:center">C1</td>
+         </tr>
+         <tr>
+             <th> Triangle </th>
+             <td style="text-align:center">P3</td>
+             <td style="text-align:center">P4</td>
+             <td style="text-align:center">C2</td>
+         </tr>
+         <tr>
+           <th> Average </th>
+           <td style="text-align:center"> R1 </td>
+           <td style="text-align:center"> R2 </td>
+           <td style="text-align:center"> </td>
+         </tr>
+       </tbody>
+     </table>
+     <p>
+     You'll need to complete the following two tasks:
+     <ol>
+        <li> Information task: to learn about payoff from different cell </li>
+        <li> Choice task: to finally choose a pair of shape of color </li>
+      </ol>
+  </p>
+</div>
+  <h3> Information Task: </h3>
+  <div>
+    <p>
+      For the information task you need to find the payoff from various cells.
+      There are two wanys you can learn about the payoff for a shape, color pair.
+      You can either open the corresponding cell. For example, if you want to learn about
+      the payoff from a Blue-Square, then you need to open cell P2.
+
+    </p>
+    <p>
+      Alternatively you can open an average as well. For example, if you open average R1
+      you will learn how many cells in the first row, i.e, for shape Square would generate payoff 1.
+      If this value is 1, then you know that one of the two cells generate 1 but you would not be given
+      any information about which cell contains payoff 1.
+    </p>
+    <h4 class="heading_small"> Cell Problem: </h4>
+  <p>
+    For each round a random number between {{Constants.low_limit}} and {{Constants.high_limit}} would be
+    generated. This value would be called the <span class="emphasis"> cutoff value</span>
+      If you choose to open a cell you will get a problem of the following form,
+  </p>
+    <p class="problem">
+    Solve:  0.23141552+0.24661835-0.23638687.
+  </p>
+  <p>
+    The cutoff value is .2435673.
+    </p>
+    <p>
+      Since the result of this expression .241647 is lower than the <span class="emphasis"> cutoff value</span>
+      .2435673 the payoff from the cell is 0. Whereas if the cutoff value was .2409898, then the payoff from the chosen
+      cell would be 1. However, during the experiment you WILL NOT be given any feedback about your solution, whether
+      it is correct or not.
+
+    </p>
+
+    <p style="color:Darkred">
+      Note that, you will be provided with a calculator.
+    </p>
+    <h4 class="heading_small">Average Problem: </h4>
+    <p>
+      If you choose to open an average row or average column (in short we will call it <span class="emphasis">
+        average </span>) then you will get a problem of the following form:
+      </p>
+      <p>
+        The second last digit represents the number of ones in the row:
+      </p>
+      <p>
+        .51217116.
+      </p>
+      <p>
+        Since the <span style= "color:Red">second last </span> digit is 1, there exists exactly one cell in this row that gives payoff 1,
+        all other cells give payoff 0. However, no further information would be given which cell generates
+        payoff 1.
+      </p>
+
+      <h4 class="heading_small"> Cell or Average? </h4>
+      <p>
+        For any round you can open any number of cells and avearges. Once you solve a problem for a given cell or
+        average you will be able to observe your own solution before you decide whether to open another cell or average.
+        You can also go back and reopen any cell or  average. You can also open the cells and avearges in any order possible.
+        You can always choose to not solve the problem in any given cell or avearge. Once you are done with opening cells and averages
+        you need to proceed to the choice stage.
+      </p>
+
+      <h4 class="heading_small"> Possibilities: </h4>
+      <p>
+        At the beginning of each round you will be provided with possible number of cells
+        with zero in the matrix. There may be more than one possibilities given to you. For each possibility
+        the percentage of chance would also be given to you.
+      </p>
+      <p>
+        For example, if there are only two possibilites, namely, exactly one cell
+        contains payoff 1 or, exactly three cells contain payoff 1 in the 2 by 2 matrix with equal probability, then
+        there is a 50% chance only one cell generates payoff 1 and each cell is equally likely to generate payoff 1 and
+        with 50% chance only one cell generates 0 and again each cell is equally likely to generate payoff 0.
+      </p>
+
+      <p>
+        Similarly there can be more than two possibilities. For example in the 2 by 2 example you may be told that
+        there are 3 cells with 0 with 25% chance, 1 cell with 0 with 25% chance and 2 cells with 0 with 50% chance.
+      </p>
+    </div>
+    <h3> Choice Stage:</h3>
+     <div>
+       <h4 class="heading_small"> Choice of cell or average: </h4>
+      <p>
+       In the choice stage you need to choose a color and a shape. If you choose shape i and color j then
+       you will get the payoff from cell (i,j).
+      </p>
+      <p>
+        You are also allowed to choose the average row or column. For example,
+        if you choose <span style = "color:red"> average column</span> and <span style = "color: green">
+          second row</span>, then one cell would be chosen randomly from second row and your payoff
+           would be the payoff of the randomly chosen cell.
+      </p>
+      <h5 style="color:DarkRed">
+        However, if you choose both average row and average column together then your payoff would be zero for sure.
+      </h5>
+      <h4 class="heading_small">Number of choices: </h4>
+      <p>
+        You will be given {{Constants.num_choices}} choices in the choice stage. Only one choice will be chosen at random for
+        payoff. Each combination of color and shape chosen by you would be considered for final payoff with
+        <span style ="color:red">equal chances</span> .
+        You can also choose the exact same cell or avearge more than once.
+      </p>
+      <p>
+        For example, consider our 2 by 2 example from before. Suppose the actual matrix is as follows:
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <td> </td>
+              <th style="color:Red; text-align:center"> Red </th>
+              <th style="color:Blue; text-align:center">	Blue	</th>
+              <th style="text-align:center">	Average </th>
+            </tr>
+            <tr>
+              <th> Square </th>
+              <td style="text-align:center">1</td>
+              <td style="text-align:center">0</td>
+              <td style="text-align:center">1</td>
+            </tr>
+            <tr>
+                <th> Triangle </th>
+                <td style="text-align:center">0</td>
+                <td style="text-align:center">0</td>
+                <td style="text-align:center">0</td>
+            </tr>
+            <tr>
+              <th> Average </th>
+              <td style="text-align:center"> 1 </td>
+              <td style="text-align:center"> 0 </td>
+              <td style="text-align:center"> </td>
+            </tr>
+          </tbody>
+        </table>
+        Suppose you are given with only 4 choices. Given the matrix you will only get 1
+         if you choose the first cell, namely the Red Square. Suppose
+         after opening several averages and cells you decide to choose the Red Square and Blue Square with
+         equal chances. Then you can choose both of them twice.
+       </p>
+       <p>
+       Then with 50% chance Red Square will be selected and you will get 1 but with 50%
+       chance Blue Square will be selected and you will get 0.
+      </p>
+      <p>
+        Whereas if you select Red Square 3 out of 4 choices and Blue Square only once, then with 75% chance
+        Red Square is selected and you will get 1 and with only 25% chance Blue Square is selected in which case
+        you will get zero.
+      </p>
+
+      <h3> Quiz:</h3>
+     <p>
+       In the following few pages we will ask questions about the structure of the experiment
+       to make sure you have understood how to find the value for a cell and an average.
+       You can only start the actual experiment if you can clear the quiz. The instructions for the
+       quiz will be provided in the following pages.
+      </p>
+
+     <h3> Time limit: </h3>
+     <p>
+       For the actual experiment you will have {{Constants.time_limit}} minutes to finish as many rounds as possible.
+       Your total payoff would be the sum of all the payoffs from each round. If time runs in the middle
+       of a round then no payoff would be added for that round.
+     </p>
+
+</div>
+
+<p style="text-align:center; font-size:130%">
+  Good Luck!
+</p>
+  {% next_button %}
+  {% endblock %}
+{% block styles %}
+<style>
+  span.emphasis {
+    font-style : italic;
+    color: RoyalBlue;
+  }
+  p.problem{
+    font-size: 110%;
+    color: Tomato;
+  }
+  h4.heading_small{
+    color: Navy;
+  }
+</style>
+{% endblock%}

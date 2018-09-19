@@ -1,0 +1,15 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Instructions
+{% endblock %}
+
+{% block content %}
+
+  <p>
+     Press the next button to start the experiment. You will have {{Constants.time_limit}}
+     minutes to finish the experiment.
+  </p>
+  {% next_button %}
+  {% endblock %}

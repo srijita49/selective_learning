@@ -10,8 +10,25 @@
 
 </ul>
 
-
+{% if player.row_choice == 0 and player.column_choice == 0 %}
+<p class="average_warning">
+  Warning: You have chosen average row and avergae column together.
+  This would generate payoff 0 for sure!
+</p>
+{% endif %}
 {% next_button %}
+{% endblock %}
+
+{% block styles %}
+    <style>
+        .otree-timer {
+            display: none;
+        }
+        p.average_warning{
+          font-size: 120%;
+          color: Red;
+        }
+    </style>
 {% endblock %}
 
 {% block scripts %}
@@ -33,12 +50,4 @@ $(function () {
     });
 });
 </script>
-{% endblock %}
-
-{% block styles %}
-    <style>
-        .otree-timer {
-            display: none;
-        }
-    </style>
 {% endblock %}

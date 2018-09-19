@@ -1,0 +1,52 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Revealed cell
+{% endblock %}
+
+{% block content %}
+
+  <p class="solution">
+    Solution to the problem from cell {{problem_no}} is {{payoff_cell}}.
+  </p>
+  <p class="cutoff">
+    The cutoff value is given by {{rand_cutoff}}.
+  </p>
+  <p> {% formfield player.solution %}
+  <button class="btn btn-success">Submit</button> </p>
+
+  <p>
+    You have revealed <span style = 'color:DarkRed'> {{reveal_cell_no}} </span> cells.
+    You can reveal upto {{Constants.cell_reveal}} cells.
+  </p>
+
+{% endblock %}
+
+{% block styles %}
+    <style>
+        .otree-timer {
+            display: none;
+        }
+        p.solution{
+          font-size: 150%;
+          color: RoyalBlue;
+        }
+        p.cutoff{
+          font-size: 110%
+          color:Tomato;
+        }
+    </style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(function () {
+    $('.otree-timer__time-left').on('update.countdown', function (event) {
+        if (event.offset.totalSeconds === 5) {
+            $('.otree-timer').show();
+        }
+    });
+});
+</script>
+{% endblock %}

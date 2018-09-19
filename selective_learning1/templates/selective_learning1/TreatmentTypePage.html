@@ -1,0 +1,74 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+Free Information
+{% endblock %}
+
+{% block content %}
+<div>
+  {% if treat_type == 1 %}
+  <p> In this round you have an option to learn about the payoff from {{Constants.cell_reveal}}
+    <span style = 'color:Red; font-size:110%'>cells </span>
+    without solving the problem.
+  </p>
+    <p>
+     If you choose the <span style= "color:Tomato; font-style:italic">reveal</span> option
+     (by clicking the reveal button <button class = "btn btn-info" type="button"> Reveal </button>) then the solution of the
+     problem for the cell would be provided. You'll have the option to store this value.
+  </p>
+  <p> However you cannot reveal the value for any averages. For observing averages you
+    need to solve the given problem.
+  </p>
+  {% endif %}
+
+  {% if treat_type == 2 %}
+  <p> In this round you have an option to learn about the payoff fromn {{Constants.avg_reveal}}
+    <span style = 'color:Red; font-size:110%'> averages </span>
+    without solving the problem.
+  </p>
+    <p>
+     If you choose the <span style= "color:Tomato; font-style:italic">reveal</span> option
+     (by clicking the reveal button <button class = "btn btn-info" type="button"> Reveal </button>) then the solution of the
+     problem for the average would be provided. You'll have the option to store this value.
+  </p>
+  <p> However you cannot reveal the value for any cells in the matrix for free. For observing
+    the value in any cell you need to solve the problem.
+  </p>
+  {% endif %}
+
+  {% if treat_type == 3 %}
+  <p> In this round you have an option to learn about the payoff from {{Constants.both_reveal}}
+    <span style = 'color:Red; font-size:110%'>cells or averages </span>
+    without solving the problem.
+  </p>
+    <p>
+     If you choose the <span style= "color:Tomato; font-style:italic">reveal</span> option
+     (by clicking the reveal button <button class = "btn btn-info" type="button"> Reveal </button>) then the solution of the
+     problem for the selected cell or average would be provided.
+     You'll have the option to store this value.
+  </p>
+  {% endif %}
+  {% next_button %}
+</div>
+{% endblock %}
+
+{% block styles %}
+    <style>
+        .otree-timer {
+            display: none;
+        }
+    </style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(function () {
+    $('.otree-timer__time-left').on('update.countdown', function (event) {
+        if (event.offset.totalSeconds === 5) {
+            $('.otree-timer').show();
+        }
+    });
+});
+</script>
+{% endblock %}

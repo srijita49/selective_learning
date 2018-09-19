@@ -1,3 +1,4 @@
+
 {% extends "global/Page.html" %}
 {% load otree static %}
 
@@ -6,15 +7,7 @@
 {% endblock %}
 
 {% block content %}
-  <div>
-    <p>
-      There are {{zeros}} zeros in the matrix.
-    </p>
-    <p>
-      The cutoff value is {{cutoff}}.
-    </p>
-  </div>
-  <table class="table table-bordered">
+    <table class="table table-bordered">
     <tbody>
       <tr>
         <td> </td>
@@ -157,6 +150,7 @@
         <td><button class="btn btn-info rowbutton" name= 'row_problem' value="6">R7</button></td>
         <td><button class="btn btn-info rowbutton" name= 'row_problem' value="7">R8</button></td>
         <td><button class="btn btn-info rowbutton" name= 'row_problem' value="8">R9</button></td>
+        <td><button class="btn btn-danger rowbutton" name= 'no_learning' value="8">Pass</button></td>
       </tr>
     </tbody>
   </table>

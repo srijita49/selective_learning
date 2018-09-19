@@ -6,24 +6,31 @@
 {% endblock %}
 
 {% block content %}
- {% if subsession.round_number == 1%}
-  <p>
-  You are now ready to start round the actual experiment.
-  Good Luck!
+ {% if subsession.round_number != 1%}
+    <p class="payoff">
+    Payoff in last round was {{finalpayoff}}.
   </p>
-  <p>
-     Press the next button to start the round.
+  <p class="payoff">
+    Total Payoff {{totalpayoff}}
   </p>
   {% else %}
   <p>
-    This round payoff: {{finalpayoff}}
-
+    On the next page you will given the number of possible cells that gives payoff 0.
+    The set of possibilites only applies to the current round.
   </p>
+{% endif %}
 
-  <p>
-      Total Payoff: {{totalpayoff}}
-  </p>
+<div>
 
-  {% endif %}
+    Press the next button to start round {{subsession.round_number}}.
+
+</div>
   {% next_button %}
   {% endblock %}
+ {% block styles %}
+ <style>
+  p.payoff {
+    color: DarkRed
+  }
+ </style>
+ {% endblock %}
