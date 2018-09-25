@@ -5,10 +5,11 @@
 {% endblock %}
 
 {% block content%}
+<h5 style="color:Blue"> Remember: you need to make {{Constants.num_choices}} choices. </h5>
 <h4> You have chosen: </h4>
-<ul id="choiceList">
+<ol id="choiceList">
 
-</ul>
+</ol>
 
 {% if player.row_choice == 0 and player.column_choice == 0 %}
 <p class="average_warning">

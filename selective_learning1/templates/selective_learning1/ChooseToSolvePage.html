@@ -10,8 +10,8 @@ Solve the Problem or Continue
 <p>
   You have selected
   {% if player.problem != None %} cell : {{problem_no }}.
-  {% else %} {%if player.row_problem != None %} row : {{problem_no}}.
-  {% else %} {% if player.col_problem != None %} column : {{ problem_no }}.
+  {% else %} {%if player.row_problem != None %} column : {{problem_no}}.
+  {% else %} {% if player.col_problem != None %} row : {{ problem_no }}.
   {% endif %}
   {% endif %}
   {% endif %}
@@ -53,7 +53,7 @@ Solve the Problem or Continue
 
     {% if treat_type == 1 %}
     {% if player.problem != None %}
-    {% if reveal_cell_no < Constants.cell_reveal %}
+    {% if player.reveal_cell_total < Constants.cell_reveal %}
     <p> <button class= "btn btn-info" name = 'reveal_cell' value = "1"> Reveal </button>
     </p>
     {% else %}
@@ -66,24 +66,24 @@ Solve the Problem or Continue
 
     {% if treat_type == 2 %}
     {% if player.row_problem != None or player.col_problem != None %}
-    {% if reveal_avg_no < Constants.avg_reveal %}
+    {% if player.reveal_avg_total < Constants.avg_reveal %}
     <p> <button class= "btn btn-info" name = 'reveal_avg' value = "1"> Reveal </button>
     </p>
     {% else %}
-    <p> You have already revealed {{Constants.avg_reveal}} cells.
-      No further cell can be revealed.
+    <p> You have already revealed {{Constants.avg_reveal}} averages.
+      No further average can be revealed.
     </p>
     {% endif %}
     {% endif %}
     {% endif %}
 
     {% if treat_type == 3 %}
-    {% if reveal_both_no < Constants.both_reveal %}
+    {% if player.reveal_both_total < Constants.both_reveal %}
     <p> <button class= "btn btn-info" name = 'reveal_both' value = "1"> Reveal </button>
     </p>
     {% else %}
-    <p> You have already revealed {{Constants.both_reveal}} cells.
-      No further cell can be revealed.
+    <p> You have already revealed {{Constants.both_reveal}} cells or averages.
+      No further cell or average can be revealed.
     </p>
     {% endif %}
     {% endif %}

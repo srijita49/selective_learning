@@ -28,7 +28,7 @@
   <p> {% formfield player.solution %}
   <button class="btn btn-success">Submit</button> </p>
   <p>
-    You have revealed {{reveal_both_no}} cells or averages. You can reveal
+    You have revealed {{player.reveal_both_total}} cells or averages. You can reveal
     at most {{Constants.both_reveal}} cells or averages in total.
   </p>
 {% endblock %}

@@ -1,0 +1,26 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Payment Information
+{% endblock %}
+
+{% block content %}
+
+  <p>
+     The payoff from this round is {{finalpayoff}}.
+  </p>
+  {% next_button %}
+  {% endblock %}
+
+  {% block scripts %}
+  <script>
+  $(function () {
+      $('.otree-timer__time-left').on('update.countdown', function (event) {
+          if (event.offset.totalSeconds === 5) {
+              $('.otree-timer').show();
+          }
+      });
+  });
+  </script>
+  {% endblock %}
