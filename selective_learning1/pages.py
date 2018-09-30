@@ -12,8 +12,8 @@ class TimerPage(Page):
     def is_displayed(self):
         return self.round_number == 1
 
-    def vars_for_template(self):
-        return{"tot_correct_answer": self.player.participant.vars["tot_correct_answer"]}
+    # def vars_for_template(self):
+    #     return{"tot_correct_answer": self.player.participant.vars["tot_correct_answer"]}
 
     def before_next_page(self):
         self.participant.vars['expiry'] = time.time() + Constants.time_limit*60
@@ -29,14 +29,11 @@ class InstructionTwoPage(Page):
             problem_type = []
             row_options= [i for i in range (0, Constants.num_rows+2) ]
             column_options=[i for i in range (0, Constants.num_rows+2) ]
-            row_choices = []
-            column_choices = []
+            row_choices = [0]*(Constants.num_choices)
+            column_choices = [0]*(Constants.num_choices)
             choice_list = [0]*(Constants.num_cells + 1)
             row_choice_list = [0]*Constants.num_rows
             column_choice_list = [0]*Constants.num_rows
-            row_choice_all = []
-            col_choice_all = []
-            pay_list_round = []
             problem_no = ''
             treatment_type = 0
             if player.treat_group == 1 :
@@ -71,11 +68,9 @@ class InstructionTwoPage(Page):
             player.participant.vars['choice_list'] = choice_list
             player.participant.vars['row_choice_list'] = row_choice_list
             player.participant.vars['column_choice_list'] = column_choice_list
-            player.participant.vars['pay_list_round'] = pay_list_round
             player.participant.vars['problem_no'] = problem_no
             player.participant.vars['treatment_type'] = treatment_type
-            player.participant.vars['row_choice_all'] =row_choice_all
-            player.participant.vars['col_choice_all'] =col_choice_all
+
 
     def vars_for_template(self):
         return{ 'totalpayoff': self.participant.payoff}
@@ -306,12 +301,11 @@ class ContinueLearningPage(Page):
     def get_timeout_seconds(self):
         return self.participant.vars['expiry'] - time.time()
 
-
-class FinalChoiceOnePage(Page):
+class FinalChoiceOne1Page(Page):
     form_model = 'player'
-    form_fields = ['row_choice', 'column_choice']
+    form_fields = ['row_choice_1', 'col_choice_1']
 
-    def row_choice_choices(self):
+    def row_choice_1_choices(self):
         choices = [[0, 'Average Row'],
                 [1,'Square'],
                 [2,'Triangle'],
@@ -322,10 +316,10 @@ class FinalChoiceOnePage(Page):
                 [7, 'Heart'],
                 [8, 'Rectangle'],
                 [9, 'Ellipse'] ]
-        random.shuffle(choices)
+        # random.shuffle(choices)
         return choices
 
-    def column_choice_choices(self):
+    def col_choice_1_choices(self):
         choices=[[0, 'Average Column'],
                 [1, 'Red'],
                 [2, 'Blue'],
@@ -336,7 +330,93 @@ class FinalChoiceOnePage(Page):
                 [7, 'Gray'],
                 [8, 'Brown'],
                 [9, 'Violet'] ]
-        random.shuffle(choices)
+        # random.shuffle(choices)
+        return choices
+
+    def get_timeout_seconds(self):
+        return self.participant.vars['expiry'] - time.time()
+
+    def is_displayed(self):
+        return self.participant.vars['expiry']-time.time()>3
+
+class FinalChoiceTwo1Page(Page):
+    def vars_for_template(self):
+        rid = self.player.row_choice_1
+        cid = self.player.col_choice_1
+        if rid != 0 and cid != 0:
+            self.player.participant.vars['choice_list'][(rid-1)*Constants.num_rows + (cid-1)] = 1
+        elif rid == 0 and cid != 0:
+            self.player.participant.vars['column_choice_list'][cid-1] = 1
+        elif rid!=0 and cid == 0:
+            self.player.participant.vars['row_choice_list'][rid-1] = 1
+        else:
+            self.player.participant.vars['choice_list'][-1] = 1
+            self.player.payoff_choice_1 = 0
+        for i in range(Constants.num_cells):
+            if self.player.participant.vars['choice_list'][i] == 1:
+                self.player.payoff_choice_1 = self.player.participant.vars['check_payoff'][i]
+        for i in range(Constants.num_rows):
+            if  self.player.participant.vars['row_choice_list'][i] == 1:
+                payoff_row = self.player.participant.vars['check_payoff'][i*Constants.num_rows : (i+1)*Constants.num_rows]
+                rand_row= random.randint(1, len(payoff_row))
+                self.player.payoff_choice_1 = payoff_row[rand_row-1]
+        for i in range(Constants.num_rows):
+            if self.player.participant.vars['column_choice_list'][i] == 1:
+                payoff_col = self.player.participant.vars['check_payoff'][i: Constants.num_rows*(Constants.num_rows -1) + i+1: Constants.num_rows]
+                rand_col = random.randint(1, len(payoff_col))
+                self.player.payoff_choice_1 = payoff_col[rand_col-1]
+        if rid == 0:
+            self.player.participant.vars['row_choices'][0] = "average row"
+        else:
+            self.player.participant.vars['row_choices'][0] = 'row '+ str(self.player.participant.vars['row_options'][rid])
+        if cid == 0:
+            self.player.participant.vars['column_choices'][0] = 'average column'
+        else:
+            self.player.participant.vars['column_choices'][0] = 'column '+ str(self.player.participant.vars['column_options'][cid])
+
+        return {'row_choices': self.player.participant.vars['row_choices'],
+                'column_choices': self.player.participant.vars['column_choices'],
+                'choice_list': self.player.participant.vars['choice_list'],
+                'row_choice_list': self.player.participant.vars['row_choice_list'],
+                'column_choice_list': self.player.participant.vars['column_choice_list']}
+
+    def get_timeout_seconds(self):
+        return self.participant.vars['expiry'] - time.time()
+
+    def is_displayed(self):
+        return self.participant.vars['expiry']-time.time()>3
+
+
+class FinalChoiceOne2Page(Page):
+    form_model = 'player'
+    form_fields = ['row_choice_2', 'col_choice_2']
+
+    def row_choice_2_choices(self):
+        choices = [[0, 'Average Row'],
+                [1,'Square'],
+                [2,'Triangle'],
+                [3, 'Circle'],
+                [4, 'Diamond'],
+                [5, 'Pentagon'],
+                [6, 'Spade'],
+                [7, 'Heart'],
+                [8, 'Rectangle'],
+                [9, 'Ellipse'] ]
+        # random.shuffle(choices)
+        return choices
+
+    def col_choice_2_choices(self):
+        choices=[[0, 'Average Column'],
+                [1, 'Red'],
+                [2, 'Blue'],
+                [3, 'Orange'],
+                [4, 'Purple'],
+                [5, 'Pink'],
+                [6, 'Green'],
+                [7, 'Gray'],
+                [8, 'Brown'],
+                [9, 'Violet'] ]
+        # random.shuffle(choices)
         return choices
 
     def get_timeout_seconds(self):
@@ -346,13 +426,10 @@ class FinalChoiceOnePage(Page):
         return self.participant.vars['expiry']-time.time()>3
 
 
-class FinalChoiceTwoPage(Page):
+class FinalChoiceTwo2Page(Page):
     def vars_for_template(self):
-        rid = self.player.row_choice
-        cid = self.player.column_choice
-        payoff_row =[]
-        self.player.participant.vars['row_choice_all'].append(self.player.row_choice)
-        self.player.participant.vars['col_choice_all'].append(self.player.column_choice)
+        rid = self.player.row_choice_2
+        cid = self.player.col_choice_2
         if rid != 0 and cid != 0:
             self.player.participant.vars['choice_list'][(rid-1)*Constants.num_rows + (cid-1)] = 1
         elif rid == 0 and cid != 0:
@@ -361,34 +438,636 @@ class FinalChoiceTwoPage(Page):
             self.player.participant.vars['row_choice_list'][rid-1] = 1
         else:
             self.player.participant.vars['choice_list'][-1] = 1
+            self.player.payoff_choice_2 = 0
         for i in range(Constants.num_cells):
             if self.player.participant.vars['choice_list'][i] == 1:
-                self.player.participant.vars['pay_list_round'].append(self.player.participant.vars['check_payoff'][i])
+                self.player.payoff_choice_2 = self.player.participant.vars['check_payoff'][i]
         for i in range(Constants.num_rows):
             if  self.player.participant.vars['row_choice_list'][i] == 1:
                 payoff_row = self.player.participant.vars['check_payoff'][i*Constants.num_rows : (i+1)*Constants.num_rows]
                 rand_row= random.randint(1, len(payoff_row))
-                self.player.participant.vars['pay_list_round'].append(payoff_row[rand_row-1])
+                self.player.payoff_choice_2 = payoff_row[rand_row-1]
         for i in range(Constants.num_rows):
             if self.player.participant.vars['column_choice_list'][i] == 1:
                 payoff_col = self.player.participant.vars['check_payoff'][i: Constants.num_rows*(Constants.num_rows -1) + i+1: Constants.num_rows]
                 rand_col = random.randint(1, len(payoff_col))
-                self.player.participant.vars['pay_list_round'].append(payoff_col[rand_col-1])
+                self.player.payoff_choice_2 = payoff_col[rand_col-1]
         if rid == 0:
-            self.player.participant.vars['row_choices'].append('average row')
+            self.player.participant.vars['row_choices'][1] = "average row"
         else:
-            self.player.participant.vars['row_choices'].append( 'row '+ str(self.player.participant.vars['row_options'][rid]))
+            self.player.participant.vars['row_choices'][1] = 'row '+ str(self.player.participant.vars['row_options'][rid])
         if cid == 0:
-            self.player.participant.vars['column_choices'].append('average column')
+            self.player.participant.vars['column_choices'][1] = 'average column'
         else:
-            self.player.participant.vars['column_choices'].append('column '+ str(self.player.participant.vars['column_options'][cid]))
+            self.player.participant.vars['column_choices'][1] = 'column '+ str(self.player.participant.vars['column_options'][cid])
 
         return {'row_choices': self.player.participant.vars['row_choices'],
                 'column_choices': self.player.participant.vars['column_choices'],
                 'choice_list': self.player.participant.vars['choice_list'],
                 'row_choice_list': self.player.participant.vars['row_choice_list'],
-                'column_choice_list': self.player.participant.vars['column_choice_list'],
-                'pay_list_round' : self.player.participant.vars['pay_list_round'] }
+                'column_choice_list': self.player.participant.vars['column_choice_list']}
+
+    def get_timeout_seconds(self):
+        return self.participant.vars['expiry'] - time.time()
+
+    def is_displayed(self):
+        return self.participant.vars['expiry']-time.time()>3
+
+class FinalChoiceOne3Page(Page):
+    form_model = 'player'
+    form_fields = ['row_choice_3', 'col_choice_3']
+
+    def row_choice_3_choices(self):
+        choices = [[0, 'Average Row'],
+                [1,'Square'],
+                [2,'Triangle'],
+                [3, 'Circle'],
+                [4, 'Diamond'],
+                [5, 'Pentagon'],
+                [6, 'Spade'],
+                [7, 'Heart'],
+                [8, 'Rectangle'],
+                [9, 'Ellipse'] ]
+        # random.shuffle(choices)
+        return choices
+
+    def col_choice_3_choices(self):
+        choices=[[0, 'Average Column'],
+                [1, 'Red'],
+                [2, 'Blue'],
+                [3, 'Orange'],
+                [4, 'Purple'],
+                [5, 'Pink'],
+                [6, 'Green'],
+                [7, 'Gray'],
+                [8, 'Brown'],
+                [9, 'Violet'] ]
+        # random.shuffle(choices)
+        return choices
+
+    def get_timeout_seconds(self):
+        return self.participant.vars['expiry'] - time.time()
+
+    def is_displayed(self):
+        return self.participant.vars['expiry']-time.time()>3
+
+
+class FinalChoiceTwo3Page(Page):
+    def vars_for_template(self):
+        rid = self.player.row_choice_3
+        cid = self.player.col_choice_3
+        if rid != 0 and cid != 0:
+            self.player.participant.vars['choice_list'][(rid-1)*Constants.num_rows + (cid-1)] = 1
+        elif rid == 0 and cid != 0:
+            self.player.participant.vars['column_choice_list'][cid-1] = 1
+        elif rid!=0 and cid == 0:
+            self.player.participant.vars['row_choice_list'][rid-1] = 1
+        else:
+            self.player.participant.vars['choice_list'][-1] = 1
+            self.player.payoff_choice_3 = 0
+        for i in range(Constants.num_cells):
+            if self.player.participant.vars['choice_list'][i] == 1:
+                self.player.payoff_choice_3 = self.player.participant.vars['check_payoff'][i]
+        for i in range(Constants.num_rows):
+            if  self.player.participant.vars['row_choice_list'][i] == 1:
+                payoff_row = self.player.participant.vars['check_payoff'][i*Constants.num_rows : (i+1)*Constants.num_rows]
+                rand_row= random.randint(1, len(payoff_row))
+                self.player.payoff_choice_3 = payoff_row[rand_row-1]
+        for i in range(Constants.num_rows):
+            if self.player.participant.vars['column_choice_list'][i] == 1:
+                payoff_col = self.player.participant.vars['check_payoff'][i: Constants.num_rows*(Constants.num_rows -1) + i+1: Constants.num_rows]
+                rand_col = random.randint(1, len(payoff_col))
+                self.player.payoff_choice_3 = payoff_col[rand_col-1]
+        if rid == 0:
+            self.player.participant.vars['row_choices'][2] = "average row"
+        else:
+            self.player.participant.vars['row_choices'][2] = 'row '+ str(self.player.participant.vars['row_options'][rid])
+        if cid == 0:
+            self.player.participant.vars['column_choices'][2] = 'average column'
+        else:
+            self.player.participant.vars['column_choices'][2] = 'column '+ str(self.player.participant.vars['column_options'][cid])
+
+        return {'row_choices': self.player.participant.vars['row_choices'],
+                'column_choices': self.player.participant.vars['column_choices'],
+                'choice_list': self.player.participant.vars['choice_list'],
+                'row_choice_list': self.player.participant.vars['row_choice_list'],
+                'column_choice_list': self.player.participant.vars['column_choice_list']}
+
+    def get_timeout_seconds(self):
+        return self.participant.vars['expiry'] - time.time()
+
+    def is_displayed(self):
+        return self.participant.vars['expiry']-time.time()>3
+
+class FinalChoiceOne4Page(Page):
+    form_model = 'player'
+    form_fields = ['row_choice_4', 'col_choice_4']
+
+    def row_choice_4_choices(self):
+        choices = [[0, 'Average Row'],
+                [1,'Square'],
+                [2,'Triangle'],
+                [3, 'Circle'],
+                [4, 'Diamond'],
+                [5, 'Pentagon'],
+                [6, 'Spade'],
+                [7, 'Heart'],
+                [8, 'Rectangle'],
+                [9, 'Ellipse'] ]
+        # random.shuffle(choices)
+        return choices
+
+    def col_choice_4_choices(self):
+        choices=[[0, 'Average Column'],
+                [1, 'Red'],
+                [2, 'Blue'],
+                [3, 'Orange'],
+                [4, 'Purple'],
+                [5, 'Pink'],
+                [6, 'Green'],
+                [7, 'Gray'],
+                [8, 'Brown'],
+                [9, 'Violet'] ]
+        # random.shuffle(choices)
+        return choices
+
+    def get_timeout_seconds(self):
+        return self.participant.vars['expiry'] - time.time()
+
+    def is_displayed(self):
+        return self.participant.vars['expiry']-time.time()>3
+
+
+class FinalChoiceTwo4Page(Page):
+    def vars_for_template(self):
+        rid = self.player.row_choice_4
+        cid = self.player.col_choice_4
+        if rid != 0 and cid != 0:
+            self.player.participant.vars['choice_list'][(rid-1)*Constants.num_rows + (cid-1)] = 1
+        elif rid == 0 and cid != 0:
+            self.player.participant.vars['column_choice_list'][cid-1] = 1
+        elif rid!=0 and cid == 0:
+            self.player.participant.vars['row_choice_list'][rid-1] = 1
+        else:
+            self.player.participant.vars['choice_list'][-1] = 1
+            self.player.payoff_choice_4 = 0
+        for i in range(Constants.num_cells):
+            if self.player.participant.vars['choice_list'][i] == 1:
+                self.player.payoff_choice_4 = self.player.participant.vars['check_payoff'][i]
+        for i in range(Constants.num_rows):
+            if  self.player.participant.vars['row_choice_list'][i] == 1:
+                payoff_row = self.player.participant.vars['check_payoff'][i*Constants.num_rows : (i+1)*Constants.num_rows]
+                rand_row= random.randint(1, len(payoff_row))
+                self.player.payoff_choice_4 = payoff_row[rand_row-1]
+        for i in range(Constants.num_rows):
+            if self.player.participant.vars['column_choice_list'][i] == 1:
+                payoff_col = self.player.participant.vars['check_payoff'][i: Constants.num_rows*(Constants.num_rows -1) + i+1: Constants.num_rows]
+                rand_col = random.randint(1, len(payoff_col))
+                self.player.payoff_choice_4 = payoff_col[rand_col-1]
+        if rid == 0:
+            self.player.participant.vars['row_choices'][3] = "average row"
+        else:
+            self.player.participant.vars['row_choices'][3] = 'row '+ str(self.player.participant.vars['row_options'][rid])
+        if cid == 0:
+            self.player.participant.vars['column_choices'][3] = 'average column'
+        else:
+            self.player.participant.vars['column_choices'][3] = 'column '+ str(self.player.participant.vars['column_options'][cid])
+
+        return {'row_choices': self.player.participant.vars['row_choices'],
+                'column_choices': self.player.participant.vars['column_choices'],
+                'choice_list': self.player.participant.vars['choice_list'],
+                'row_choice_list': self.player.participant.vars['row_choice_list'],
+                'column_choice_list': self.player.participant.vars['column_choice_list']}
+
+    def get_timeout_seconds(self):
+        return self.participant.vars['expiry'] - time.time()
+
+    def is_displayed(self):
+        return self.participant.vars['expiry']-time.time()>3
+
+class FinalChoiceOne5Page(Page):
+    form_model = 'player'
+    form_fields = ['row_choice_5', 'col_choice_5']
+
+    def row_choice_5_choices(self):
+        choices = [[0, 'Average Row'],
+                [1,'Square'],
+                [2,'Triangle'],
+                [3, 'Circle'],
+                [4, 'Diamond'],
+                [5, 'Pentagon'],
+                [6, 'Spade'],
+                [7, 'Heart'],
+                [8, 'Rectangle'],
+                [9, 'Ellipse'] ]
+        # random.shuffle(choices)
+        return choices
+
+    def col_choice_5_choices(self):
+        choices=[[0, 'Average Column'],
+                [1, 'Red'],
+                [2, 'Blue'],
+                [3, 'Orange'],
+                [4, 'Purple'],
+                [5, 'Pink'],
+                [6, 'Green'],
+                [7, 'Gray'],
+                [8, 'Brown'],
+                [9, 'Violet'] ]
+        # random.shuffle(choices)
+        return choices
+
+    def get_timeout_seconds(self):
+        return self.participant.vars['expiry'] - time.time()
+
+    def is_displayed(self):
+        return self.participant.vars['expiry']-time.time()>3
+
+
+class FinalChoiceTwo5Page(Page):
+    def vars_for_template(self):
+        rid = self.player.row_choice_5
+        cid = self.player.col_choice_5
+        if rid != 0 and cid != 0:
+            self.player.participant.vars['choice_list'][(rid-1)*Constants.num_rows + (cid-1)] = 1
+        elif rid == 0 and cid != 0:
+            self.player.participant.vars['column_choice_list'][cid-1] = 1
+        elif rid!=0 and cid == 0:
+            self.player.participant.vars['row_choice_list'][rid-1] = 1
+        else:
+            self.player.participant.vars['choice_list'][-1] = 1
+            self.player.payoff_choice_5 = 0
+        for i in range(Constants.num_cells):
+            if self.player.participant.vars['choice_list'][i] == 1:
+                self.player.payoff_choice_5 = self.player.participant.vars['check_payoff'][i]
+        for i in range(Constants.num_rows):
+            if  self.player.participant.vars['row_choice_list'][i] == 1:
+                payoff_row = self.player.participant.vars['check_payoff'][i*Constants.num_rows : (i+1)*Constants.num_rows]
+                rand_row= random.randint(1, len(payoff_row))
+                self.player.payoff_choice_5 = payoff_row[rand_row-1]
+        for i in range(Constants.num_rows):
+            if self.player.participant.vars['column_choice_list'][i] == 1:
+                payoff_col = self.player.participant.vars['check_payoff'][i: Constants.num_rows*(Constants.num_rows -1) + i+1: Constants.num_rows]
+                rand_col = random.randint(1, len(payoff_col))
+                self.player.payoff_choice_5 = payoff_col[rand_col-1]
+        if rid == 0:
+            self.player.participant.vars['row_choices'][4] = "average row"
+        else:
+            self.player.participant.vars['row_choices'][4] = 'row '+ str(self.player.participant.vars['row_options'][rid])
+        if cid == 0:
+            self.player.participant.vars['column_choices'][4] = 'average column'
+        else:
+            self.player.participant.vars['column_choices'][4] = 'column '+ str(self.player.participant.vars['column_options'][cid])
+
+        return {'row_choices': self.player.participant.vars['row_choices'],
+                'column_choices': self.player.participant.vars['column_choices'],
+                'choice_list': self.player.participant.vars['choice_list'],
+                'row_choice_list': self.player.participant.vars['row_choice_list'],
+                'column_choice_list': self.player.participant.vars['column_choice_list']}
+
+    def get_timeout_seconds(self):
+        return self.participant.vars['expiry'] - time.time()
+
+    def is_displayed(self):
+        return self.participant.vars['expiry']-time.time()>3
+
+class FinalChoiceOne6Page(Page):
+    form_model = 'player'
+    form_fields = ['row_choice_6', 'col_choice_6']
+
+    def row_choice_6_choices(self):
+        choices = [[0, 'Average Row'],
+                [1,'Square'],
+                [2,'Triangle'],
+                [3, 'Circle'],
+                [4, 'Diamond'],
+                [5, 'Pentagon'],
+                [6, 'Spade'],
+                [7, 'Heart'],
+                [8, 'Rectangle'],
+                [9, 'Ellipse'] ]
+        # random.shuffle(choices)
+        return choices
+
+    def col_choice_6_choices(self):
+        choices=[[0, 'Average Column'],
+                [1, 'Red'],
+                [2, 'Blue'],
+                [3, 'Orange'],
+                [4, 'Purple'],
+                [5, 'Pink'],
+                [6, 'Green'],
+                [7, 'Gray'],
+                [8, 'Brown'],
+                [9, 'Violet'] ]
+        # random.shuffle(choices)
+        return choices
+
+    def get_timeout_seconds(self):
+        return self.participant.vars['expiry'] - time.time()
+
+    def is_displayed(self):
+        return self.participant.vars['expiry']-time.time()>3
+
+
+class FinalChoiceTwo6Page(Page):
+    def vars_for_template(self):
+        rid = self.player.row_choice_6
+        cid = self.player.col_choice_6
+        if rid != 0 and cid != 0:
+            self.player.participant.vars['choice_list'][(rid-1)*Constants.num_rows + (cid-1)] = 1
+        elif rid == 0 and cid != 0:
+            self.player.participant.vars['column_choice_list'][cid-1] = 1
+        elif rid!=0 and cid == 0:
+            self.player.participant.vars['row_choice_list'][rid-1] = 1
+        else:
+            self.player.participant.vars['choice_list'][-1] = 1
+            self.player.payoff_choice_6 = 0
+        for i in range(Constants.num_cells):
+            if self.player.participant.vars['choice_list'][i] == 1:
+                self.player.payoff_choice_6 = self.player.participant.vars['check_payoff'][i]
+        for i in range(Constants.num_rows):
+            if  self.player.participant.vars['row_choice_list'][i] == 1:
+                payoff_row = self.player.participant.vars['check_payoff'][i*Constants.num_rows : (i+1)*Constants.num_rows]
+                rand_row= random.randint(1, len(payoff_row))
+                self.player.payoff_choice_6 = payoff_row[rand_row-1]
+        for i in range(Constants.num_rows):
+            if self.player.participant.vars['column_choice_list'][i] == 1:
+                payoff_col = self.player.participant.vars['check_payoff'][i: Constants.num_rows*(Constants.num_rows -1) + i+1: Constants.num_rows]
+                rand_col = random.randint(1, len(payoff_col))
+                self.player.payoff_choice_6 = payoff_col[rand_col-1]
+        if rid == 0:
+            self.player.participant.vars['row_choices'][5] = "average row"
+        else:
+            self.player.participant.vars['row_choices'][5] = 'row '+ str(self.player.participant.vars['row_options'][rid])
+        if cid == 0:
+            self.player.participant.vars['column_choices'][5] = 'average column'
+        else:
+            self.player.participant.vars['column_choices'][5] = 'column '+ str(self.player.participant.vars['column_options'][cid])
+
+        return {'row_choices': self.player.participant.vars['row_choices'],
+                'column_choices': self.player.participant.vars['column_choices'],
+                'choice_list': self.player.participant.vars['choice_list'],
+                'row_choice_list': self.player.participant.vars['row_choice_list'],
+                'column_choice_list': self.player.participant.vars['column_choice_list']}
+
+    def get_timeout_seconds(self):
+        return self.participant.vars['expiry'] - time.time()
+
+    def is_displayed(self):
+        return self.participant.vars['expiry']-time.time()>3
+
+class FinalChoiceOne7Page(Page):
+    form_model = 'player'
+    form_fields = ['row_choice_7', 'col_choice_7']
+
+    def row_choice_7_choices(self):
+        choices = [[0, 'Average Row'],
+                [1,'Square'],
+                [2,'Triangle'],
+                [3, 'Circle'],
+                [4, 'Diamond'],
+                [5, 'Pentagon'],
+                [6, 'Spade'],
+                [7, 'Heart'],
+                [8, 'Rectangle'],
+                [9, 'Ellipse'] ]
+        # random.shuffle(choices)
+        return choices
+
+    def col_choice_7_choices(self):
+        choices=[[0, 'Average Column'],
+                [1, 'Red'],
+                [2, 'Blue'],
+                [3, 'Orange'],
+                [4, 'Purple'],
+                [5, 'Pink'],
+                [6, 'Green'],
+                [7, 'Gray'],
+                [8, 'Brown'],
+                [9, 'Violet'] ]
+        # random.shuffle(choices)
+        return choices
+
+    def get_timeout_seconds(self):
+        return self.participant.vars['expiry'] - time.time()
+
+    def is_displayed(self):
+        return self.participant.vars['expiry']-time.time()>3
+
+
+class FinalChoiceTwo7Page(Page):
+    def vars_for_template(self):
+        rid = self.player.row_choice_7
+        cid = self.player.col_choice_7
+        if rid != 0 and cid != 0:
+            self.player.participant.vars['choice_list'][(rid-1)*Constants.num_rows + (cid-1)] = 1
+        elif rid == 0 and cid != 0:
+            self.player.participant.vars['column_choice_list'][cid-1] = 1
+        elif rid!=0 and cid == 0:
+            self.player.participant.vars['row_choice_list'][rid-1] = 1
+        else:
+            self.player.participant.vars['choice_list'][-1] = 1
+            self.player.payoff_choice_7 = 0
+        for i in range(Constants.num_cells):
+            if self.player.participant.vars['choice_list'][i] == 1:
+                self.player.payoff_choice_7 = self.player.participant.vars['check_payoff'][i]
+        for i in range(Constants.num_rows):
+            if  self.player.participant.vars['row_choice_list'][i] == 1:
+                payoff_row = self.player.participant.vars['check_payoff'][i*Constants.num_rows : (i+1)*Constants.num_rows]
+                rand_row= random.randint(1, len(payoff_row))
+                self.player.payoff_choice_7 = payoff_row[rand_row-1]
+        for i in range(Constants.num_rows):
+            if self.player.participant.vars['column_choice_list'][i] == 1:
+                payoff_col = self.player.participant.vars['check_payoff'][i: Constants.num_rows*(Constants.num_rows -1) + i+1: Constants.num_rows]
+                rand_col = random.randint(1, len(payoff_col))
+                self.player.payoff_choice_7 = payoff_col[rand_col-1]
+        if rid == 0:
+            self.player.participant.vars['row_choices'][6] = "average row"
+        else:
+            self.player.participant.vars['row_choices'][6] = 'row '+ str(self.player.participant.vars['row_options'][rid])
+        if cid == 0:
+            self.player.participant.vars['column_choices'][6] = 'average column'
+        else:
+            self.player.participant.vars['column_choices'][6] = 'column '+ str(self.player.participant.vars['column_options'][cid])
+
+        return {'row_choices': self.player.participant.vars['row_choices'],
+                'column_choices': self.player.participant.vars['column_choices'],
+                'choice_list': self.player.participant.vars['choice_list'],
+                'row_choice_list': self.player.participant.vars['row_choice_list'],
+                'column_choice_list': self.player.participant.vars['column_choice_list']}
+
+    def get_timeout_seconds(self):
+        return self.participant.vars['expiry'] - time.time()
+
+    def is_displayed(self):
+        return self.participant.vars['expiry']-time.time()>3
+
+class FinalChoiceOne8Page(Page):
+    form_model = 'player'
+    form_fields = ['row_choice_8', 'col_choice_8']
+
+    def row_choice_8_choices(self):
+        choices = [[0, 'Average Row'],
+                [1,'Square'],
+                [2,'Triangle'],
+                [3, 'Circle'],
+                [4, 'Diamond'],
+                [5, 'Pentagon'],
+                [6, 'Spade'],
+                [7, 'Heart'],
+                [8, 'Rectangle'],
+                [9, 'Ellipse'] ]
+        # random.shuffle(choices)
+        return choices
+
+    def col_choice_8_choices(self):
+        choices=[[0, 'Average Column'],
+                [1, 'Red'],
+                [2, 'Blue'],
+                [3, 'Orange'],
+                [4, 'Purple'],
+                [5, 'Pink'],
+                [6, 'Green'],
+                [7, 'Gray'],
+                [8, 'Brown'],
+                [9, 'Violet'] ]
+        # random.shuffle(choices)
+        return choices
+
+    def get_timeout_seconds(self):
+        return self.participant.vars['expiry'] - time.time()
+
+    def is_displayed(self):
+        return self.participant.vars['expiry']-time.time()>3
+
+
+class FinalChoiceTwo8Page(Page):
+    def vars_for_template(self):
+        rid = self.player.row_choice_8
+        cid = self.player.col_choice_8
+        if rid != 0 and cid != 0:
+            self.player.participant.vars['choice_list'][(rid-1)*Constants.num_rows + (cid-1)] = 1
+        elif rid == 0 and cid != 0:
+            self.player.participant.vars['column_choice_list'][cid-1] = 1
+        elif rid!=0 and cid == 0:
+            self.player.participant.vars['row_choice_list'][rid-1] = 1
+        else:
+            self.player.participant.vars['choice_list'][-1] = 1
+            self.player.payoff_choice_8 = 0
+        for i in range(Constants.num_cells):
+            if self.player.participant.vars['choice_list'][i] == 1:
+                self.player.payoff_choice_8 = self.player.participant.vars['check_payoff'][i]
+        for i in range(Constants.num_rows):
+            if  self.player.participant.vars['row_choice_list'][i] == 1:
+                payoff_row = self.player.participant.vars['check_payoff'][i*Constants.num_rows : (i+1)*Constants.num_rows]
+                rand_row= random.randint(1, len(payoff_row))
+                self.player.payoff_choice_8 = payoff_row[rand_row-1]
+        for i in range(Constants.num_rows):
+            if self.player.participant.vars['column_choice_list'][i] == 1:
+                payoff_col = self.player.participant.vars['check_payoff'][i: Constants.num_rows*(Constants.num_rows -1) + i+1: Constants.num_rows]
+                rand_col = random.randint(1, len(payoff_col))
+                self.player.payoff_choice_8 = payoff_col[rand_col-1]
+        if rid == 0:
+            self.player.participant.vars['row_choices'][7] = "average row"
+        else:
+            self.player.participant.vars['row_choices'][7] = 'row '+ str(self.player.participant.vars['row_options'][rid])
+        if cid == 0:
+            self.player.participant.vars['column_choices'][7] = 'average column'
+        else:
+            self.player.participant.vars['column_choices'][7] = 'column '+ str(self.player.participant.vars['column_options'][cid])
+
+        return {'row_choices': self.player.participant.vars['row_choices'],
+                'column_choices': self.player.participant.vars['column_choices'],
+                'choice_list': self.player.participant.vars['choice_list'],
+                'row_choice_list': self.player.participant.vars['row_choice_list'],
+                'column_choice_list': self.player.participant.vars['column_choice_list']}
+
+    def get_timeout_seconds(self):
+        return self.participant.vars['expiry'] - time.time()
+
+    def is_displayed(self):
+        return self.participant.vars['expiry']-time.time()>3
+
+class FinalChoiceOne9Page(Page):
+    form_model = 'player'
+    form_fields = ['row_choice_9', 'col_choice_9']
+
+    def row_choice_9_choices(self):
+        choices = [[0, 'Average Row'],
+                [1,'Square'],
+                [2,'Triangle'],
+                [3, 'Circle'],
+                [4, 'Diamond'],
+                [5, 'Pentagon'],
+                [6, 'Spade'],
+                [7, 'Heart'],
+                [8, 'Rectangle'],
+                [9, 'Ellipse'] ]
+        # random.shuffle(choices)
+        return choices
+
+    def col_choice_9_choices(self):
+        choices=[[0, 'Average Column'],
+                [1, 'Red'],
+                [2, 'Blue'],
+                [3, 'Orange'],
+                [4, 'Purple'],
+                [5, 'Pink'],
+                [6, 'Green'],
+                [7, 'Gray'],
+                [8, 'Brown'],
+                [9, 'Violet'] ]
+        # random.shuffle(choices)
+        return choices
+
+    def get_timeout_seconds(self):
+        return self.participant.vars['expiry'] - time.time()
+
+    def is_displayed(self):
+        return self.participant.vars['expiry']-time.time()>3
+
+
+class FinalChoiceTwo9Page(Page):
+    def vars_for_template(self):
+        rid = self.player.row_choice_9
+        cid = self.player.col_choice_9
+        if rid != 0 and cid != 0:
+            self.player.participant.vars['choice_list'][(rid-1)*Constants.num_rows + (cid-1)] = 1
+        elif rid == 0 and cid != 0:
+            self.player.participant.vars['column_choice_list'][cid-1] = 1
+        elif rid!=0 and cid == 0:
+            self.player.participant.vars['row_choice_list'][rid-1] = 1
+        else:
+            self.player.participant.vars['choice_list'][-1] = 1
+            self.player.payoff_choice_9 = 0
+        for i in range(Constants.num_cells):
+            if self.player.participant.vars['choice_list'][i] == 1:
+                self.player.payoff_choice_9 = self.player.participant.vars['check_payoff'][i]
+        for i in range(Constants.num_rows):
+            if  self.player.participant.vars['row_choice_list'][i] == 1:
+                payoff_row = self.player.participant.vars['check_payoff'][i*Constants.num_rows : (i+1)*Constants.num_rows]
+                rand_row= random.randint(1, len(payoff_row))
+                self.player.payoff_choice_9 = payoff_row[rand_row-1]
+        for i in range(Constants.num_rows):
+            if self.player.participant.vars['column_choice_list'][i] == 1:
+                payoff_col = self.player.participant.vars['check_payoff'][i: Constants.num_rows*(Constants.num_rows -1) + i+1: Constants.num_rows]
+                rand_col = random.randint(1, len(payoff_col))
+                self.player.payoff_choice_9 = payoff_col[rand_col-1]
+        if rid == 0:
+            self.player.participant.vars['row_choices'][8] = "average row"
+        else:
+            self.player.participant.vars['row_choices'][8] = 'row '+ str(self.player.participant.vars['row_options'][rid])
+        if cid == 0:
+            self.player.participant.vars['column_choices'][8] = 'average column'
+        else:
+            self.player.participant.vars['column_choices'][8] = 'column '+ str(self.player.participant.vars['column_options'][cid])
+
+        return {'row_choices': self.player.participant.vars['row_choices'],
+                'column_choices': self.player.participant.vars['column_choices'],
+                'choice_list': self.player.participant.vars['choice_list'],
+                'row_choice_list': self.player.participant.vars['row_choice_list'],
+                'column_choice_list': self.player.participant.vars['column_choice_list']}
 
     def get_timeout_seconds(self):
         return self.participant.vars['expiry'] - time.time()
@@ -397,11 +1076,13 @@ class FinalChoiceTwoPage(Page):
         return self.participant.vars['expiry']-time.time()>3
 
     def before_next_page(self):
-        if self.player.row_choice == 0 & self.player.column_choice == 0 :
-            self.player.payoff = 0
-        else:
-            rand_choice = random.randint(1, len(self.player.participant.vars['pay_list_round']))
-            self.player.payoff = self.player.participant.vars['pay_list_round'][rand_choice-1]
+        # if self.player.row_choice == 0 & self.player.column_choice == 0 :
+        #     self.player.payoff = 0
+        # else:
+        rand_choice = random.randint(1, Constants.num_choices)
+        payoff_list = [self.player.payoff_choice_1, self.player.payoff_choice_2,self.player.payoff_choice_3, self.player.payoff_choice_4,self.player.payoff_choice_5,self.player.payoff_choice_6,self.player.payoff_choice_7,self.player.payoff_choice_8,self.player.payoff_choice_9]
+        self.player.payoff = payoff_list[rand_choice-1]
+
 
 class PayoffInfoPage(Page):
     def vars_for_template(self):
@@ -414,61 +1095,10 @@ class PayoffInfoPage(Page):
     def is_displayed(self):
         return self.participant.vars['expiry']-time.time()>3
 
-    def before_next_page(self):
-
-        if len(self.player.participant.vars["row_choice_all"]) > 0:
-            self.player.row_choice_1 = self.player.participant.vars['row_choice_all'][0]
-            self.player.col_choice_1 = self.player.participant.vars['col_choice_all'][0]
-            self.player.payoff1 = self.player.participant.vars["pay_list_round"][0]
-
-        if len(self.player.participant.vars["row_choice_all"]) > 1:
-            self.player.row_choice_2 = self.player.participant.vars['row_choice_all'][1]
-            self.player.col_choice_2 = self.player.participant.vars['col_choice_all'][1]
-            self.player.payoff2 = self.player.participant.vars["pay_list_round"][1]
-
-        if len(self.player.participant.vars["row_choice_all"]) > 2:
-            self.player.row_choice_3 = self.player.participant.vars['row_choice_all'][2]
-            self.player.col_choice_3 = self.player.participant.vars['col_choice_all'][2]
-            self.player.payoff3 = self.player.participant.vars["pay_list_round"][2]
-
-        if len(self.player.participant.vars["row_choice_all"]) > 3:
-            self.player.row_choice_4 = self.player.participant.vars['row_choice_all'][3]
-            self.player.col_choice_4 = self.player.participant.vars['col_choice_all'][3]
-            self.player.payoff4 = self.player.participant.vars["pay_list_round"][3]
-
-        if len(self.player.participant.vars["row_choice_all"]) > 4:
-            self.player.row_choice_5 = self.player.participant.vars['row_choice_all'][4]
-            self.player.col_choice_5 = self.player.participant.vars['col_choice_all'][4]
-            self.player.payoff5 = self.player.participant.vars["pay_list_round"][4]
-
-        if len(self.player.participant.vars["row_choice_all"]) > 5:
-            self.player.row_choice_6 = self.player.participant.vars['row_choice_all'][5]
-            self.player.col_choice_6 = self.player.participant.vars['col_choice_all'][5]
-            self.player.payoff6 = self.player.participant.vars["pay_list_round"][5]
-
-        if len(self.player.participant.vars["row_choice_all"]) > 6:
-            self.player.row_choice_7 = self.player.participant.vars['row_choice_all'][6]
-            self.player.col_choice_7 = self.player.participant.vars['col_choice_all'][6]
-            self.player.payoff7 = self.player.participant.vars["pay_list_round"][6]
-
-        if len(self.player.participant.vars["row_choice_all"]) > 6:
-            self.player.row_choice_8 = self.player.participant.vars['row_choice_all'][7]
-            self.player.col_choice_8 = self.player.participant.vars['col_choice_all'][7]
-            self.player.payoff8 = self.player.participant.vars["pay_list_round"][7]
-
-        if len(self.player.participant.vars["row_choice_all"]) > 7:
-            self.player.row_choice_9 = self.player.participant.vars['row_choice_all'][8]
-            self.player.col_choice_9 = self.player.participant.vars['col_choice_all'][8]
-            self.player.payoff9 = self.player.participant.vars["pay_list_round"][8]
-
-
-
-
-
 
 
 
 num_of_tries= PayoffMatrix.N + 2*PayoffMatrix.n
 learning_page_sequence = [SelectProblemPage, ChooseToSolvePage,  CellOnlyRevealPage, AvgOnlyRevealPage, BothRevealPage, ContinueLearningPage]*num_of_tries
-choice_page_sequence = [FinalChoiceOnePage, FinalChoiceTwoPage]*Constants.num_choices + [PayoffInfoPage]
+choice_page_sequence = [FinalChoiceOne1Page, FinalChoiceTwo1Page, FinalChoiceOne2Page, FinalChoiceTwo2Page, FinalChoiceOne3Page, FinalChoiceTwo3Page, FinalChoiceOne4Page, FinalChoiceTwo4Page, FinalChoiceOne5Page, FinalChoiceTwo5Page, FinalChoiceOne6Page, FinalChoiceTwo6Page, FinalChoiceOne7Page, FinalChoiceTwo7Page, FinalChoiceOne8Page, FinalChoiceTwo8Page, FinalChoiceOne9Page, FinalChoiceTwo9Page, PayoffInfoPage]
 page_sequence = [TimerPage, InstructionTwoPage, PriorPage, TreatmentTypePage] + learning_page_sequence + choice_page_sequence

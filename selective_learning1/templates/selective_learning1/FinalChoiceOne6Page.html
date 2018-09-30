@@ -1,0 +1,35 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+{% block title %}
+  Final choice of cells
+{% endblock %}
+
+{% block content%}
+  <p> Which shape would you like to choose?</p>
+     {% formfield player.row_choice_6 %}
+
+   <p> Which color would you like to choose? </p>
+     {% formfield player.col_choice_6 %}
+
+     {% next_button %}
+{% endblock %}
+
+{% block styles %}
+    <style>
+        .otree-timer {
+            display: none;
+        }
+    </style>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(function () {
+            $('.otree-timer__time-left').on('update.countdown', function (e) {
+                if (event.offset.totalSeconds === 5) {
+                    $('.otree-timer').show();
+                }
+            });
+        });
+    </script>
+{% endblock %}

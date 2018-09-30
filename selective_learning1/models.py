@@ -18,7 +18,7 @@ Your app description
 
 
 class Constants(BaseConstants):
-    name_in_url = 'selective_learning1'
+    name_in_url = 'selective_learning2'
     players_per_group = None
     num_rounds = 30
     num_rows = PayoffMatrix.n
@@ -26,7 +26,7 @@ class Constants(BaseConstants):
     num_choices = 9
     low_limit = PayoffMatrix.low_cutoff
     high_limit = PayoffMatrix.high_cutoff
-    time_limit = 20
+    time_limit = 5
     cell_reveal = 9
     avg_reveal = 9
     both_reveal = 9
@@ -56,9 +56,6 @@ class Player(BasePlayer):
 
     cont_learning = models.BooleanField( initial = True)
 
-    row_choice= models.IntegerField() # container for row choice
-    column_choice= models.IntegerField() # container for column choice
-
     reveal_cell = models.IntegerField(initial = 0, blank = True) # container for whether a cell is revealed, treatment 1
     reveal_avg = models.IntegerField(initial = 0, blank = True) # container for whether an average is revealed, treatment 2
     reveal_both = models.IntegerField(initial = 0, blank = True) # container for whether a cell OR average is revealed, treatment 3
@@ -75,8 +72,7 @@ class Player(BasePlayer):
     ac_switch = models.IntegerField(initial= 0) # number of times switched from average to cell
 
     info_first = models.IntegerField(initial = -1) # cell 0 average 1
-    info_last = models.IntegerField(initial = -1 ) # cell 0 average 1
-
+    info_last = models.IntegerField(initial = -1)
 
     treat_group = models.IntegerField(initial = 0) # group 1 : cell + both, group 2 : average + both
     treat_type = models.IntegerField(initial =0) # 1: cells, 2: averages, 3: both
@@ -94,37 +90,37 @@ class Player(BasePlayer):
     # Final row and column choices and payoff
     row_choice_1= models.IntegerField()
     col_choice_1 = models.IntegerField()
-    payoff1 = models.IntegerField()
+    payoff_choice_1 = models.IntegerField()
 
 
     row_choice_2= models.IntegerField()
     col_choice_2 = models.IntegerField()
-    payoff2 = models.IntegerField()
+    payoff_choice_2 = models.IntegerField()
 
     row_choice_3= models.IntegerField()
     col_choice_3 = models.IntegerField()
-    payoff3 = models.IntegerField()
+    payoff_choice_3 = models.IntegerField()
 
     row_choice_4= models.IntegerField()
     col_choice_4 = models.IntegerField()
-    payoff4 = models.IntegerField()
+    payoff_choice_4 = models.IntegerField()
 
     row_choice_5= models.IntegerField()
     col_choice_5 = models.IntegerField()
-    payoff5 = models.IntegerField()
+    payoff_choice_5 = models.IntegerField()
 
     row_choice_6= models.IntegerField()
     col_choice_6 = models.IntegerField()
-    payoff6 = models.IntegerField()
+    payoff_choice_6 = models.IntegerField()
 
     row_choice_7= models.IntegerField()
     col_choice_7 = models.IntegerField()
-    payoff7 = models.IntegerField()
+    payoff_choice_7 = models.IntegerField()
 
     row_choice_8= models.IntegerField()
     col_choice_8 = models.IntegerField()
-    payoff8 = models.IntegerField()
+    payoff_choice_8 = models.IntegerField()
 
     row_choice_9= models.IntegerField()
     col_choice_9 = models.IntegerField()
-    payoff9 = models.IntegerField()
+    payoff_choice_9 = models.IntegerField()

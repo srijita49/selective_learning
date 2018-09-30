@@ -1,0 +1,54 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+{% block title %}
+  Final choice of cells
+{% endblock %}
+
+{% block content%}
+<h5 style="color:Blue"> Remember: you need to make {{Constants.num_choices}} choices. </h5>
+<h4> You have chosen: </h4>
+<ol id="choiceList">
+
+</ol>
+
+{% if player.row_choice_2 == 0 and player.col_choice_2 == 0 %}
+<p class="average_warning">
+  Warning: You have chosen average row and avergae column together.
+  This would generate payoff 0 for sure!
+</p>
+{% endif %}
+{% next_button %}
+{% endblock %}
+
+{% block styles %}
+    <style>
+        .otree-timer {
+            display: none;
+        }
+        p.average_warning{
+          font-size: 120%;
+          color: Red;
+        }
+    </style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+var row = {{row_choices|json}};
+var column={{column_choices|json}};
+var rowLen = row.length;
+var listElement = " ";
+for (i = 0; i < 2; i++) {
+    listElement += "<li>" + row[i] + " and " + column[i] + "</li>";
+}
+document.getElementById("choiceList").innerHTML = listElement;
+
+$(function () {
+    $('.otree-timer__time-left').on('update.countdown', function (event) {
+        if (event.offset.totalSeconds === 5) {
+            $('.otree-timer').show();
+        }
+    });
+});
+</script>
+{% endblock %}
